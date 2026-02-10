@@ -7,7 +7,7 @@ export default function Footer() {
     <footer className="w-full bg-white border-t">
       <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-4 py-8 sm:flex-row md:px-6">
         <div className="flex flex-col sm:flex-row items-center gap-4">
-          <Button asChild className="bg-[#FF3B30] hover:bg-[#D63025] text-white font-bold text-sm px-6 py-3 h-auto rounded-md shadow-md transition-transform hover:scale-105">
+          <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-sm px-6 py-3 h-auto rounded-md shadow-md transition-transform hover:scale-105">
             <a href="https://wa.me/5511999999999?text=Olá,%20gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener noreferrer">
               Agende sua consulta
             </a>

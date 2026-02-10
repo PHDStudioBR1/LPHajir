@@ -45,7 +45,7 @@ export default function Testimonials() {
     <section id="testimonials" className="w-full bg-background py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-          <h2 className="text-3xl font-headline font-bold tracking-tighter sm:text-4xl text-[#222]">O que meus pacientes dizem</h2>
+          <h2 className="text-3xl font-headline font-bold tracking-tighter sm:text-4xl text-foreground">O que meus pacientes dizem</h2>
           <p className="max-w-[700px] text-muted-foreground md:text-lg">
             Depoimentos de pessoas que transformaram suas vidas com suporte profissional.
           </p>
@@ -87,7 +87,7 @@ export default function Testimonials() {
           <CarouselNext className="hidden sm:flex" />
         </Carousel>
         <div className="mt-12 flex justify-center">
-          <Button asChild className="bg-[#FF3B30] hover:bg-[#D63025] text-white font-bold text-xl px-10 py-6 h-auto rounded-md shadow-lg transition-transform hover:scale-105">
+          <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xl px-10 py-6 h-auto rounded-md shadow-lg transition-transform hover:scale-105">
             <a href="https://wa.me/5511999999999?text=Olá,%20gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener noreferrer">
               Agende sua consulta
             </a>
