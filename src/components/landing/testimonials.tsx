@@ -88,7 +88,7 @@ export default function Testimonials() {
         </Carousel>
         <div className="mt-12 flex justify-center">
           <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xl px-10 py-6 h-auto rounded-md shadow-lg transition-transform hover:scale-105">
-            <a href="https://wa.me/5511999999999?text=Olá,%20gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/5511977920368" target="_blank" rel="noopener noreferrer">
               Agende sua consulta
             </a>
           </Button>

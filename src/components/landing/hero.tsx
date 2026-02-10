@@ -16,22 +16,20 @@ export default function Hero() {
             Sou médica especializada em psiquiatria e saúde mental. Ofereço atendimento online para ajudar você a superar desafios emocionais.
           </p>
           <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xl px-10 py-6 h-auto rounded-md shadow-lg transition-transform hover:scale-105">
-            <a href="https://wa.me/5511999999999?text=Olá,%20gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/5511977920368" target="_blank" rel="noopener noreferrer">
               Agende sua consulta
             </a>
           </Button>
         </div>
         <div className="flex justify-center">
-          {profileImage && (
-            <Image
-              src={profileImage.imageUrl}
-              alt={profileImage.description}
-              width={400}
-              height={500}
-              className="rounded-[12px] w-full max-w-[400px] object-cover shadow-2xl"
-              data-ai-hint={profileImage.imageHint}
-            />
-          )}
+          <Image
+            src="/images/nova-imagem.jpg"
+            alt="Dra. Hajir Abdalla - Psiquiatra"
+            width={400}
+            height={500}
+            className="rounded-[12px] w-full max-w-[400px] object-cover shadow-2xl"
+            priority
+          />
         </div>
       </div>
     </section>

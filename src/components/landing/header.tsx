@@ -12,7 +12,7 @@ export default function Header() {
         </div>
         <div className="flex justify-center">
           <Button asChild>
-            <a href="https://wa.me/5511999999999?text=Olá,%20gostaria%20de%20agendar%20uma%20consulta." target="_blank" rel="noopener noreferrer">
+            <a href="https://wa.me/5511977920368" target="_blank" rel="noopener noreferrer">
               Agende sua consulta
             </a>
           </Button>
