@@ -1,0 +1,85 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: lphajir-frontend
+  namespace: lphajir
+  labels:
+    app: lphajir-web
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: lphajir-web
+  template:
+    metadata:
+      labels:
+        app: lphajir-web
+    spec:
+      containers:
+        - name: lphajir-frontend
+          # Ajuste este repositório de imagem conforme seu Docker Hub
+          image: donavanalencar/lphajir-web:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 3000
+              name: http
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: PORT
+              value: "3000"
+            - name: HOST
+              value: "0.0.0.0"
+            - name: APP_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: lphajir-secrets
+                  key: APP_SECRET
+          startupProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 5
+            timeoutSeconds: 5
+            failureThreshold: 24
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 15
+            timeoutSeconds: 5
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 0
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            requests:
+              cpu: "50m"
+              memory: "128Mi"
+            limits:
+              cpu: "200m"
+              memory: "256Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: lphajir-web-service
+  namespace: lphajir
+  labels:
+    app: lphajir-web
+spec:
+  type: ClusterIP
+  selector:
+    app: lphajir-web
+  ports:
+    - name: http
+      port: 80
+      targetPort: 3000
+      protocol: TCP
+

@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lphajir-ingress
+  namespace: lphajir
+  labels:
+    app: lphajir-web
+  annotations:
+    kubernetes.io/ingress.class: traefik
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+    traefik.ingress.kubernetes.io/router.tls: "true"
+    traefik.ingress.kubernetes.io/router.tls.certresolver: le
+spec:
+  tls:
+    - hosts:
+        - lphajir.546digitalservices.com
+      secretName: lphajir-546digitalservices-tls
+  rules:
+    - host: lphajir.546digitalservices.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: lphajir-web-service
+                port:
+                  number: 80
+
