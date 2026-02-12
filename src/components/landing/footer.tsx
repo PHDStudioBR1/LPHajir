@@ -16,51 +16,52 @@ const TikTokIcon = ({ className }: { className?: string }) => (
 
 export default function Footer() {
   return (
-    <footer className="w-full bg-background border-t">
-      <div className="container mx-auto flex flex-col items-center justify-between gap-4 px-4 py-8 sm:flex-row md:px-6">
-        <div className="flex flex-col sm:flex-row items-center gap-4">
-          <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-sm px-6 py-3 h-auto rounded-md shadow-md transition-transform hover:scale-105">
-            <a href="https://wa.me/5511977920368" target="_blank" rel="noopener noreferrer">
-              Agende sua consulta
-            </a>
-          </Button>
-          <p className="text-sm text-muted-foreground">
-            &copy; {new Date().getFullYear()} Dra. Hajir Abdalla. Todos os direitos reservados.
-          </p>
-        </div>
-        <div className="flex items-center gap-6">
-          <Link href="#" className="text-sm text-muted-foreground hover:text-primary transition-colors">
-            Política de Privacidade
-          </Link>
-          <div className="flex gap-4">
-            <a
-              href="https://www.facebook.com/drahajirabdalla"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Facebook"
-              className="text-foreground hover:text-primary transition-all duration-300"
-            >
-              <Facebook className="h-6 w-6" />
-            </a>
-            <a
-              href="https://www.instagram.com/drahaabdalla/"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Instagram"
-              className="text-foreground hover:text-primary transition-all duration-300"
-            >
-              <Instagram className="h-6 w-6" />
-            </a>
-            <a
-              href="https://www.tiktok.com/@drahaabdalla"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="TikTok"
-              className="text-foreground hover:text-primary transition-all duration-300"
-            >
-              <TikTokIcon className="h-6 w-6" />
-            </a>
+    <footer className="w-full bg-primary py-16 text-white">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
+          <div className="flex flex-col space-y-6">
+            <Link href="/" className="text-2xl font-bold font-headline text-white tracking-tight">
+              Dra. Hajir Abdalla
+            </Link>
+            <p className="text-white/70 max-w-xs">
+              Especialista em psiquiatria e saúde mental, oferecendo suporte especializado com empatia e acolhimento.
+            </p>
+            <div className="flex gap-4">
+              <a href="https://www.facebook.com/drahajirabdalla" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-accent transition-colors">
+                <Facebook className="h-5 w-5" />
+              </a>
+              <a href="https://www.instagram.com/drahaabdalla/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-accent transition-colors">
+                <Instagram className="h-5 w-5" />
+              </a>
+              <a href="https://www.tiktok.com/@drahaabdalla" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-accent transition-colors">
+                <TikTokIcon className="h-5 w-5" />
+              </a>
+            </div>
           </div>
+
+          <div className="flex flex-col space-y-4">
+            <h3 className="font-bold text-lg text-white">Links Úteis</h3>
+            <Link href="https://drahaabdalla.com" className="text-white/70 hover:text-accent transition-colors">Site Oficial</Link>
+            <Link href="#specialties" className="text-white/70 hover:text-accent transition-colors">Especialidades</Link>
+            <Link href="#testimonials" className="text-white/70 hover:text-accent transition-colors">Depoimentos</Link>
+            <button className="text-left text-white/70 hover:text-accent transition-colors">Política de Privacidade</button>
+          </div>
+
+          <div className="flex flex-col space-y-6">
+            <h3 className="font-bold text-lg text-white">Agende agora</h3>
+            <Button asChild className="bg-cta hover:bg-accent text-white font-bold h-auto py-4 rounded-full transition-all">
+              <a href="https://wa.me/5511977920368" target="_blank" rel="noopener noreferrer">
+                Comece sua jornada hoje
+              </a>
+            </Button>
+            <p className="text-sm text-white/50">
+              Atendimento Online disponível para todo o Brasil.
+            </p>
+          </div>
+        </div>
+
+        <div className="mt-16 pt-8 border-t border-white/10 text-center text-white/40 text-sm">
+          &copy; {new Date().getFullYear()} Dra. Hajir Abdalla. Todos os direitos reservados.
         </div>
       </div>
     </footer>

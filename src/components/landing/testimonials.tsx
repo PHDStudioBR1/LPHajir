@@ -44,9 +44,31 @@ export default function Testimonials() {
   return (
     <section id="testimonials" className="w-full bg-background py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
+          <div className="flex flex-col items-center p-6 bg-primary/5 rounded-2xl border border-primary/10">
+            <span className="text-4xl font-bold text-primary mb-2">+500</span>
+            <span className="text-muted-foreground font-medium">Pacientes atendidos online</span>
+          </div>
+          <div className="flex flex-col items-center p-6 bg-primary/5 rounded-2xl border border-primary/10">
+            <span className="text-4xl font-bold text-primary mb-2">95%</span>
+            <span className="text-muted-foreground font-medium">Relatam melhora significativa</span>
+          </div>
+          <div className="flex flex-col items-center p-6 bg-primary/5 rounded-2xl border border-primary/10">
+            <div className="flex flex-col items-center gap-2">
+              <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Formação / Experiência</span>
+              <div className="flex items-center gap-4 mt-2">
+                <span className="font-bold text-xl text-primary">Einstein</span>
+                <span className="text-primary/20 text-2xl">|</span>
+                <span className="font-bold text-xl text-primary">USP</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="flex flex-col items-center justify-center space-y-4 text-center mb-12">
-          <h2 className="text-3xl font-headline font-bold tracking-tighter sm:text-4xl text-foreground">O que meus pacientes dizem</h2>
-          <p className="max-w-[700px] text-muted-foreground md:text-lg">
+          <h2 className="text-3xl font-headline font-bold tracking-tight text-primary sm:text-4xl md:text-5xl">O que meus pacientes dizem</h2>
+          <div className="w-20 h-1 bg-accent rounded-full mb-4" />
+          <p className="max-w-[700px] text-muted-foreground text-lg md:text-xl">
             Depoimentos de pessoas que transformaram suas vidas com suporte profissional.
           </p>
         </div>
@@ -86,10 +108,10 @@ export default function Testimonials() {
           <CarouselPrevious className="hidden sm:flex" />
           <CarouselNext className="hidden sm:flex" />
         </Carousel>
-        <div className="mt-12 flex justify-center">
-          <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold text-xl px-10 py-6 h-auto rounded-md shadow-lg transition-transform hover:scale-105">
+        <div className="mt-16 flex justify-center">
+          <Button asChild className="bg-cta hover:bg-accent text-white font-bold text-xl px-12 py-8 h-auto rounded-full shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95">
             <a href="https://wa.me/5511977920368" target="_blank" rel="noopener noreferrer">
-              Agende sua consulta
+              Reserve sua vaga hoje
             </a>
           </Button>
         </div>

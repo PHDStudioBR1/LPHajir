@@ -36,7 +36,7 @@ export function ThemeToggle() {
         <Button
             variant="ghost"
             size="icon"
-            className="fixed top-4 right-4 z-[100] rounded-full bg-gray-200 dark:bg-gray-800 hover:bg-gray-300 dark:hover:bg-gray-700 shadow-xl w-12 h-12 text-2xl border-2 border-primary/20"
+            className="rounded-full bg-primary/5 dark:bg-primary/10 hover:bg-primary/10 dark:hover:bg-primary/20 shadow-sm w-10 h-10 text-xl border border-primary/10 transition-all duration-300"
             onClick={toggleTheme}
             aria-label="Toggle theme"
         >

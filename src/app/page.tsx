@@ -6,6 +6,8 @@ import Cta from '@/components/landing/cta';
 import ContactForm from '@/components/landing/contact-form';
 import Footer from '@/components/landing/footer';
 
+import UrgencySection from '@/components/landing/urgency-section';
+
 export default function Home() {
   return (
     <div className="flex min-h-screen flex-col">
@@ -14,7 +16,7 @@ export default function Home() {
         <Hero />
         <Specialties />
         <Testimonials />
-        <Cta />
+        <UrgencySection />
         <ContactForm />
       </main>
       <Footer />
