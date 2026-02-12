@@ -1,0 +1,14 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: lphajir-tls
+  namespace: lphajir
+spec:
+  secretName: lphajir-546digitalservices-tls
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  dnsNames:
+    - lphajir.546digitalservices.com
+  commonName: lphajir.546digitalservices.com
+

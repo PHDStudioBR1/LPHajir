@@ -43,3 +43,67 @@ next-env.d.ts
 # firebase
 firebase-debug.log
 firestore-debug.log
+
+# IDE / editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+Thumbs.db
+
+# Docker
+.docker/
+
+# Local / secrets (não commitar kubeconfig ou credenciais)
+*.local
+.kube/
+
+# Logs
+*.log
+logs/
+
+# Temporary
+tmp/
+temp/
+.tmp/
+
+# Build / cache (Next.js Turbopack, bundlers)
+.turbo/
+.cache/
+
+# Test / e2e
+test-results/
+playwright-report/
+blob-report/
+.coverage
+htmlcov/
+*.lcov
+
+# ESLint / Prettier / Stylelint
+.eslintcache
+.prettiercache
+.stylelintcache
+
+# Cursor / IDE local
+.cursor/
+.idx/
+.modified
+
+# Docker local overrides
+docker-compose.override.yml
+docker-compose.override.yaml
+
+# Package manager
+.npm
+*.tgz
+
+# Storybook (se usar)
+storybook-static/
+
+# Backup / junk
+*.bak
+*.backup
+*.orig
