@@ -15,7 +15,7 @@ export default function Hero() {
               Recupere sua paz mental e supere a ansiedade com atendimento online especializado em psiquiatria.
             </h1>
             <p className="max-w-xl text-xl text-muted-foreground font-medium leading-relaxed">
-              Dra. Hajir Abdalla - Medica com atendimento em Psiquiatria e saúde mental
+              Médica com atendimento em Psiquiatria & Saúde Mental
             </p>
           </div>
 
