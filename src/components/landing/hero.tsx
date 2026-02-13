@@ -15,7 +15,7 @@ export default function Hero() {
               Recupere sua paz mental e supere a ansiedade com atendimento online especializado em psiquiatria.
             </h1>
             <p className="max-w-xl text-xl text-muted-foreground font-medium leading-relaxed">
-              Dra. Hajir Abdalla - Médica Psiquiatra
+              Dra. Hajir Abdalla - Medica com atendimento em Psiquiatria e saúde mental
             </p>
           </div>
 
@@ -40,7 +40,7 @@ export default function Hero() {
           <div className="relative">
             <div className="absolute -inset-6 bg-accent/30 rounded-[12px] blur-3xl -z-10 animate-pulse" />
             <Image
-              src="/images/dra-hajir.jpg"
+              src="/images/dra-hajir-new.jpeg"
               alt="Dra. Hajir Abdalla - Psiquiatra"
               width={450}
               height={550}

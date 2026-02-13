@@ -46,7 +46,7 @@ export default function Testimonials() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
           <div className="flex flex-col items-center p-6 bg-primary/5 rounded-2xl border border-primary/10">
-            <span className="text-4xl font-bold text-primary mb-2">+500</span>
+            <span className="text-4xl font-bold text-primary mb-2">+ de 1500</span>
             <span className="text-muted-foreground font-medium">Pacientes atendidos online</span>
           </div>
           <div className="flex flex-col items-center p-6 bg-primary/5 rounded-2xl border border-primary/10">
@@ -54,14 +54,8 @@ export default function Testimonials() {
             <span className="text-muted-foreground font-medium">Relatam melhora significativa</span>
           </div>
           <div className="flex flex-col items-center p-6 bg-primary/5 rounded-2xl border border-primary/10">
-            <div className="flex flex-col items-center gap-2">
-              <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Formação / Experiência</span>
-              <div className="flex items-center gap-4 mt-2">
-                <span className="font-bold text-xl text-primary">Einstein</span>
-                <span className="text-primary/20 text-2xl">|</span>
-                <span className="font-bold text-xl text-primary">USP</span>
-              </div>
-            </div>
+            <span className="font-bold text-xl text-primary mb-2 text-center">Pós Graduação em Psiquiatria e Saúde Mental no Hospital Israelita Albert Einstein</span>
+            <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Formação / Experiência</span>
           </div>
         </div>
 
