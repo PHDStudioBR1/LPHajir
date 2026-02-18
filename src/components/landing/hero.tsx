@@ -22,7 +22,7 @@ export default function Hero() {
               Tratamento Médico Especializado em Ansiedade e Burnout
             </h1>
             <p className="max-w-xl text-lg md:text-xl text-muted-foreground font-medium leading-relaxed">
-              Dra. Hajir Abdalla (Especialista Albert Einstein). Diagnóstico preciso e tratamento médico humanizado com prescrição digital. Consulta online de 1 hora, sem pressa.
+              Dra. Hajir Abdalla (Especialista Albert Einstein). Diagnóstico preciso e tratamento médico humanizado com prescrição digital.
             </p>
           </div>
 
