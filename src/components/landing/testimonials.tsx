@@ -54,8 +54,8 @@ export default function Testimonials() {
             <span className="text-muted-foreground font-medium">Relatam melhora significativa</span>
           </div>
           <div className="flex flex-col items-center p-6 bg-primary/5 rounded-2xl border border-primary/10">
-            <span className="text-4xl font-bold text-primary mb-2">1h</span>
-            <span className="text-muted-foreground font-medium">Consulta online sem pressa</span>
+            <span className="text-2xl font-bold text-primary mb-2 text-center">Documentos com assinatura digital válida</span>
+            <span className="text-muted-foreground font-medium text-center">Em todo território nacional</span>
           </div>
         </div>
 
