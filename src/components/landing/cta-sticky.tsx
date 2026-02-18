@@ -9,7 +9,7 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
 export default function CtaSticky() {
   return (
     <div
-      className="fixed bottom-0 left-0 right-0 z-50 flex md:hidden safe-area-pb"
+      className="fixed bottom-0 left-0 right-0 z-40 flex md:hidden safe-area-pb"
       role="banner"
       aria-label="Chamada para ação"
     >

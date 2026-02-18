@@ -4,7 +4,7 @@ import { ThemeToggle } from '@/components/theme-toggle';
 
 export default function Header() {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-primary/10">
+    <header className="bg-background/80 backdrop-blur-md border-b border-primary/10">
       <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
         <Link href="/" className="text-2xl font-bold font-headline text-primary tracking-tight">
           Dra. Hajir Abdalla
