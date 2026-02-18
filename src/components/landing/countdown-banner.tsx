@@ -44,7 +44,7 @@ export default function CountdownBanner() {
             <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-10"></div>
             <div className="container mx-auto flex flex-col items-center justify-center gap-2 relative z-10">
                 <p className="text-sm md:text-base font-semibold text-primary-foreground tracking-wide uppercase text-center">
-                    🔴 Atendimento Online — Agende sua consulta com a Dra. Hajir Abdalla
+                    🔴Agenda reta final. Fale com nossa equipe de triagem disponível nos próximos:
                 </p>
                 <div id="countdown" className="text-lg md:text-xl font-bold text-white tracking-wide">
                     {timeLeft.expired ? (
