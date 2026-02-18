@@ -54,8 +54,8 @@ export default function Testimonials() {
             <span className="text-muted-foreground font-medium">Relatam melhora significativa</span>
           </div>
           <div className="flex flex-col items-center p-6 bg-primary/5 rounded-2xl border border-primary/10">
-            <span className="font-bold text-xl text-primary mb-2 text-center">Pós Graduação em Psiquiatria e Saúde Mental no Hospital Israelita Albert Einstein</span>
-            <span className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">Formação / Experiência</span>
+            <span className="text-4xl font-bold text-primary mb-2">1h</span>
+            <span className="text-muted-foreground font-medium">Consulta online sem pressa</span>
           </div>
         </div>
 

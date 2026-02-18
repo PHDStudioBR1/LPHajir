@@ -1,0 +1,23 @@
+# Ingress para acesso via localhost no Minikube.
+# Requer: Traefik instalado (helm install traefik ... no namespace traefik).
+# Acesso: http://localhost:<porta> (port-forward do deploy.sh) ou http://localhost (com minikube tunnel).
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: lphajir-ingress
+  namespace: lphajir
+  labels:
+    app: lphajir-web
+spec:
+  ingressClassName: traefik
+  rules:
+    # Sem host: aceita qualquer Host (ex.: localhost), ideal para acesso local
+    - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: lphajir-web-service
+                port:
+                  number: 80

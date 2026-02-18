@@ -3,7 +3,7 @@ import { Toaster } from "@/components/ui/toaster"
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Mindful Journey | Dra. Hajir Abdalla - Psiquiatria Online',
+  title: 'Dra. Hajir Abdalla - Psiquiatria Online',
   description: 'Psiquiatria online com Dra. Hajir Abdalla. Atendimento humanizado e especializado para sua saúde mental.',
 };
 
