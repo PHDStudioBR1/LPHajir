@@ -1,9 +1,10 @@
 "use client"
 
+import { useState } from "react"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { Check, Mail, User } from "lucide-react"
+import { Check, Loader2, Mail, User } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -25,6 +26,7 @@ import { applyPhoneMask } from "@/lib/phone-utils"
 
 export default function ContactForm() {
   const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const form = useForm<z.infer<typeof contactFormSchema>>({
     resolver: zodResolver(contactFormSchema),
@@ -38,20 +40,32 @@ export default function ContactForm() {
   })
 
   async function onSubmit(values: z.infer<typeof contactFormSchema>) {
-    const result = await submitContactForm(values);
-    if (result.success) {
-      toast({
-        title: `Obrigado, ${result.name}!`,
-        description: "Sua mensagem foi enviada. Entrarei em contato em breve.",
-        action: <Check className="h-5 w-5 text-green-500" />,
-      })
-      form.reset();
-    } else {
+    setIsSubmitting(true);
+    try {
+      const result = await submitContactForm(values);
+      if (result.success) {
+        toast({
+          title: `Obrigado, ${result.name}!`,
+          description: "Sua mensagem foi enviada. Entrarei em contato em breve.",
+          action: <Check className="h-5 w-5 text-green-500" />,
+        })
+        form.reset();
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Não foi possível enviar",
+          description: "Verifique sua conexão e tente novamente. Se o problema persistir, entre em contato pelo WhatsApp.",
+        });
+      }
+    } catch (err) {
+      console.error("Erro ao enviar formulário:", err);
       toast({
         variant: "destructive",
-        title: "Algo deu errado",
-        description: "Não foi possível enviar sua mensagem. Tente novamente.",
+        title: "Erro ao enviar",
+        description: "Ocorreu um erro inesperado. Tente novamente ou entre em contato pelo WhatsApp.",
       });
+    } finally {
+      setIsSubmitting(false);
     }
   }
 
@@ -65,7 +79,14 @@ export default function ContactForm() {
               Prefere enviar uma mensagem? Preencha o formulário abaixo.
             </CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="relative">
+            {isSubmitting && (
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-lg bg-background/80 backdrop-blur-sm">
+                <Loader2 className="h-12 w-12 animate-spin text-primary" />
+                <p className="mt-3 text-sm font-medium text-foreground">Processando sua mensagem...</p>
+                <p className="mt-1 text-xs text-muted-foreground">Aguarde um momento</p>
+              </div>
+            )}
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -165,8 +186,20 @@ export default function ContactForm() {
                   )}
                 />
 
-                <Button type="submit" className="w-full bg-cta hover:bg-accent text-white font-bold h-auto py-4 rounded-full shadow-lg" size="lg">
-                  Enviar Mensagem
+                <Button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full bg-cta hover:bg-accent text-white font-bold h-auto py-4 rounded-full shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
+                  size="lg"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                      Enviando...
+                    </>
+                  ) : (
+                    "Enviar Mensagem"
+                  )}
                 </Button>
               </form>
             </Form>

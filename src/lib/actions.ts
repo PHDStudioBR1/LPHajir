@@ -6,10 +6,10 @@ import { sendLeadNotification } from "./email"
 import { formatPhoneForApi } from "./phone-utils"
 
 export async function submitContactForm(data: z.infer<typeof contactFormSchema>) {
-    try {
-        const CRM_BASE = process.env.CRM_BASE_URL || "https://phdcrm.546digitalservices.com"
-        const TARGET_EMAIL = process.env.NOTIFICATION_EMAIL || "donavan.alencar@gmail.com"
+    const CRM_BASE = process.env.CRM_BASE_URL || "https://phdcrm.546digitalservices.com"
+    const TARGET_EMAIL = process.env.NOTIFICATION_EMAIL || "donavan.alencar@gmail.com"
 
+    try {
         // 1) Login no CRM
         const loginRes = await fetch(`${CRM_BASE}/auth/login`, {
             method: "POST",
@@ -22,6 +22,8 @@ export async function submitContactForm(data: z.infer<typeof contactFormSchema>)
         })
 
         if (!loginRes.ok) {
+            const errText = await loginRes.text()
+            console.error("CRM login failed:", loginRes.status, errText)
             throw new Error(`CRM login failed: ${loginRes.status}`)
         }
 
@@ -50,13 +52,15 @@ export async function submitContactForm(data: z.infer<typeof contactFormSchema>)
 
         if (!leadRes.ok) {
             const errBody = await leadRes.text()
-            throw new Error(`CRM create lead failed: ${leadRes.status} - ${errBody}`)
+            console.error("CRM create lead failed:", leadRes.status, errBody)
+            throw new Error(`CRM create lead failed: ${leadRes.status}`)
         }
 
         const leadData = (await leadRes.json()) as { data?: { id?: number } }
         const LEAD_ID = leadData.data?.id
         if (LEAD_ID == null) {
-            throw new Error("CRM create lead: no lead id in response")
+            console.error("CRM create lead: no id in response", leadData)
+            throw new Error("CRM create lead: no lead id")
         }
 
         // 3) Criar Atividade
@@ -94,7 +98,16 @@ export async function submitContactForm(data: z.infer<typeof contactFormSchema>)
 
         return { success: true, name: data.name }
     } catch (error) {
-        console.error("Erro na integração:", error)
+        console.error("Erro CRM:", error)
+        // Fallback: mesmo se CRM falhar, tenta enviar e-mail para não perder o lead
+        const emailResult = await sendLeadNotification(TARGET_EMAIL, {
+            name: data.name,
+            email: data.email,
+            message: `[CRM indisponível] Mensagem: ${data.message ?? ""}\nWhatsApp: ${data.phone}`,
+        })
+        if (emailResult.success) {
+            return { success: true, name: data.name }
+        }
         return { success: false }
     }
 }
