@@ -150,6 +150,13 @@ jobs:
           password: ${{ secrets.DOCKER_SERVER_PASSWORD }} # Opcional: use se não tiver chave SSH
           script: |
             docker pull ${{ env.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            # Para qualquer container que esteja usando a porta 3000
+            CONTAINER_ON_PORT=$(docker ps -q --filter "publish=3000")
+            if [ ! -z "$CONTAINER_ON_PORT" ]; then
+              docker stop $CONTAINER_ON_PORT
+              docker rm $CONTAINER_ON_PORT
+            fi
+            # Garante que o container com o nome lphajir-web também seja removido se existir
             docker stop ${{ env.IMAGE_NAME }} || true
             docker rm ${{ env.IMAGE_NAME }} || true
             docker run -d \
