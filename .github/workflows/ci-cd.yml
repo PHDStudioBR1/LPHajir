@@ -147,26 +147,49 @@ jobs:
     steps:
       - name: Executar Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
+        env:
+          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
+          RESEND_FROM_EMAIL: ${{ secrets.RESEND_FROM_EMAIL }}
+          NOTIFICATION_EMAIL: ${{ secrets.NOTIFICATION_EMAIL }}
+          CRM_BASE_URL: ${{ secrets.CRM_BASE_URL }}
+          CRM_TENANT_SLUG: ${{ secrets.CRM_TENANT_SLUG }}
+          CRM_USER_ID: ${{ secrets.CRM_USER_ID }}
+          CRM_ADMIN_EMAIL: ${{ secrets.CRM_ADMIN_EMAIL }}
+          CRM_ADMIN_PASSWORD: ${{ secrets.CRM_ADMIN_PASSWORD }}
+          DOCKER_NETWORK: ${{ secrets.DOCKER_NETWORK }}
         with:
           host: ${{ secrets.DOCKER_SERVER_HOST }}
           username: ${{ secrets.DOCKER_SERVER_USER }}
           key: ${{ secrets.DOCKER_SERVER_SSH_KEY }}
-          password: ${{ secrets.DOCKER_SERVER_PASSWORD }} # Opcional: use se não tiver chave SSH
+          password: ${{ secrets.DOCKER_SERVER_PASSWORD }}
+          envs: RESEND_API_KEY,RESEND_FROM_EMAIL,NOTIFICATION_EMAIL,CRM_BASE_URL,CRM_TENANT_SLUG,CRM_USER_ID,CRM_ADMIN_EMAIL,CRM_ADMIN_PASSWORD,DOCKER_NETWORK
           script: |
+            set -e
+            echo "=== Pulling image ==="
             docker pull ${{ env.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:latest
-            # Para qualquer container que esteja usando a porta 3000
-            CONTAINER_ON_PORT=$(docker ps -q --filter "publish=3000")
-            if [ ! -z "$CONTAINER_ON_PORT" ]; then
-              docker stop $CONTAINER_ON_PORT
-              docker rm $CONTAINER_ON_PORT
-            fi
-            # Garante que o container com o nome lphajir-web também seja removido se existir
-            docker stop ${{ env.IMAGE_NAME }} || true
-            docker rm ${{ env.IMAGE_NAME }} || true
+
+            echo "=== Stopping and removing old container ==="
+            docker stop ${{ env.IMAGE_NAME }} 2>/dev/null || true
+            docker rm ${{ env.IMAGE_NAME }} 2>/dev/null || true
+
+            echo "=== Starting new container ==="
+            NETWORK="${DOCKER_NETWORK:-drahajirabdalla_drahajirabdalla-network}"
             docker run -d \
               --name ${{ env.IMAGE_NAME }} \
               --restart always \
               -p 3000:3000 \
+              --network "$NETWORK" \
+              -e "RESEND_API_KEY=${RESEND_API_KEY}" \
+              -e "RESEND_FROM_EMAIL=${RESEND_FROM_EMAIL}" \
+              -e "NOTIFICATION_EMAIL=${NOTIFICATION_EMAIL}" \
+              -e "CRM_BASE_URL=${CRM_BASE_URL}" \
+              -e "CRM_TENANT_SLUG=${CRM_TENANT_SLUG}" \
+              -e "CRM_USER_ID=${CRM_USER_ID}" \
+              -e "CRM_ADMIN_EMAIL=${CRM_ADMIN_EMAIL}" \
+              -e "CRM_ADMIN_PASSWORD=${CRM_ADMIN_PASSWORD}" \
               ${{ env.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+
+            echo "=== Container running ==="
+            docker ps --filter name=${{ env.IMAGE_NAME }}
 
 
