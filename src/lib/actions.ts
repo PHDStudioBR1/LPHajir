@@ -5,13 +5,35 @@ import { contactFormSchema } from "./schemas"
 import { sendLeadNotification } from "./email"
 import { formatPhoneForApi } from "./phone-utils"
 
+const FETCH_TIMEOUT_MS = 20000 // 20s por requisição - evita travar se CRM/Resend lentos
+
+async function fetchWithTimeout(
+    url: string,
+    options: RequestInit & { timeout?: number } = {},
+): Promise<Response> {
+    const { timeout = FETCH_TIMEOUT_MS, ...fetchOpts } = options
+    const controller = new AbortController()
+    const id = setTimeout(() => controller.abort(), timeout)
+    const res = await fetch(url, { ...fetchOpts, signal: controller.signal })
+    clearTimeout(id)
+    return res
+}
+
 export async function submitContactForm(data: z.infer<typeof contactFormSchema>) {
     const CRM_BASE = process.env.CRM_BASE_URL || "https://phdcrm.546digitalservices.com"
+    const CRM_API = `${CRM_BASE.replace(/\/$/, "")}/api/crm/v1`
     const TARGET_EMAIL = process.env.NOTIFICATION_EMAIL || "donavan.alencar@gmail.com"
 
+    // 1) E-mail primeiro (mais rápido, garante que não perdemos o lead)
+    const emailResult = await sendLeadNotification(TARGET_EMAIL, {
+        name: data.name,
+        email: data.email,
+        message: `${data.message ?? ""}\n\nWhatsApp: ${data.phone}`,
+    })
+
     try {
-        // 1) Login no CRM
-        const loginRes = await fetch(`${CRM_BASE}/auth/login`, {
+        // 2) Login no CRM
+        const loginRes = await fetchWithTimeout(`${CRM_API}/auth/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
@@ -27,18 +49,18 @@ export async function submitContactForm(data: z.infer<typeof contactFormSchema>)
             throw new Error(`CRM login failed: ${loginRes.status}`)
         }
 
-        const loginData = (await loginRes.json()) as { access_token?: string }
-        const access_token = loginData.access_token
-        if (!access_token) {
-            throw new Error("CRM login: no access_token in response")
+        const loginData = (await loginRes.json()) as { data?: { accessToken?: string } }
+        const accessToken = loginData.data?.accessToken
+        if (!accessToken) {
+            throw new Error("CRM login: no data.accessToken in response")
         }
 
-        // 2) Criar Lead
-        const leadRes = await fetch(`${CRM_BASE}/api/crm/v1/leads`, {
+        // 3) Criar Lead
+        const leadRes = await fetchWithTimeout(`${CRM_API}/leads`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${access_token}`,
+                Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
                 email: data.email,
@@ -63,12 +85,12 @@ export async function submitContactForm(data: z.infer<typeof contactFormSchema>)
             throw new Error("CRM create lead: no lead id")
         }
 
-        // 3) Criar Atividade
-        const activityRes = await fetch(`${CRM_BASE}/api/crm/v1/activities`, {
+        // 4) Criar Atividade
+        const activityRes = await fetchWithTimeout(`${CRM_API}/activities`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${access_token}`,
+                Authorization: `Bearer ${accessToken}`,
             },
             body: JSON.stringify({
                 lead_id: LEAD_ID,
@@ -86,25 +108,10 @@ export async function submitContactForm(data: z.infer<typeof contactFormSchema>)
             // Não completa o fluxo se falhar atividade, mas lead já foi criado
         }
 
-        // 4) Notificação por E-mail (Resend)
-        const emailResult = await sendLeadNotification(TARGET_EMAIL, {
-            name: data.name,
-            email: data.email,
-            message: data.message ?? "",
-        })
-        if (!emailResult.success) {
-            console.warn("E-mail não enviado:", emailResult.error)
-        }
-
         return { success: true, name: data.name }
     } catch (error) {
         console.error("Erro CRM:", error)
-        // Fallback: mesmo se CRM falhar, tenta enviar e-mail para não perder o lead
-        const emailResult = await sendLeadNotification(TARGET_EMAIL, {
-            name: data.name,
-            email: data.email,
-            message: `[CRM indisponível] Mensagem: ${data.message ?? ""}\nWhatsApp: ${data.phone}`,
-        })
+        // E-mail já foi enviado no início - retorna sucesso se enviou
         if (emailResult.success) {
             return { success: true, name: data.name }
         }

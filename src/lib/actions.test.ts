@@ -7,6 +7,7 @@ vi.mock("./email", () => ({
 
 describe("submitContactForm", () => {
     const CRM_BASE = "https://phdcrm.546digitalservices.com"
+    const CRM_API = `${CRM_BASE}/api/crm/v1`
     const formData = {
         name: "João Silva",
         email: "joao@exemplo.com",
@@ -23,7 +24,7 @@ describe("submitContactForm", () => {
                 if (path.includes("/auth/login")) {
                     return Promise.resolve({
                         ok: true,
-                        json: () => Promise.resolve({ access_token: "token-123" }),
+                        json: () => Promise.resolve({ data: { accessToken: "token-123" } }),
                     } as Response)
                 }
                 if (path.includes("/leads")) {
@@ -56,7 +57,7 @@ describe("submitContactForm", () => {
         await submitContactForm(formData)
 
         expect(fetchMock).toHaveBeenCalledWith(
-            `${CRM_BASE}/auth/login`,
+            `${CRM_API}/auth/login`,
             expect.objectContaining({
                 method: "POST",
                 body: expect.stringContaining("admin@test"),
@@ -82,7 +83,7 @@ describe("submitContactForm", () => {
         vi.stubGlobal(
             "fetch",
             vi.fn((url: string) => {
-                if (String(url).includes("/auth/login")) {
+                if (String(url).includes("auth/login")) {
                     return Promise.resolve({ ok: false, status: 401 })
                 }
                 return Promise.resolve({ ok: true, json: () => ({}) })
@@ -96,10 +97,10 @@ describe("submitContactForm", () => {
         vi.stubGlobal(
             "fetch",
             vi.fn((url: string) => {
-                if (String(url).includes("/auth/login")) {
+                if (String(url).includes("auth/login")) {
                     return Promise.resolve({
                         ok: true,
-                        json: () => Promise.resolve({ access_token: "tok" }),
+                        json: () => Promise.resolve({ data: { accessToken: "tok" } }),
                     } as Response)
                 }
                 if (String(url).includes("/leads")) {
