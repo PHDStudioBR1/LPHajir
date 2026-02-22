@@ -34,6 +34,46 @@ spec:
                 secretKeyRef:
                   name: lphajir-secrets
                   key: APP_SECRET
+            - name: NOTIFICATION_EMAIL
+              valueFrom:
+                configMapKeyRef:
+                  name: lphajir-contact-config
+                  key: NOTIFICATION_EMAIL
+            - name: CRM_BASE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: lphajir-contact-config
+                  key: CRM_BASE_URL
+            - name: CRM_TENANT_SLUG
+              valueFrom:
+                configMapKeyRef:
+                  name: lphajir-contact-config
+                  key: CRM_TENANT_SLUG
+            - name: CRM_USER_ID
+              valueFrom:
+                configMapKeyRef:
+                  name: lphajir-contact-config
+                  key: CRM_USER_ID
+            - name: RESEND_FROM_EMAIL
+              valueFrom:
+                configMapKeyRef:
+                  name: lphajir-contact-config
+                  key: RESEND_FROM_EMAIL
+            - name: CRM_ADMIN_EMAIL
+              valueFrom:
+                secretKeyRef:
+                  name: lphajir-secrets
+                  key: CRM_ADMIN_EMAIL
+            - name: CRM_ADMIN_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: lphajir-secrets
+                  key: CRM_ADMIN_PASSWORD
+            - name: RESEND_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: lphajir-secrets
+                  key: RESEND_API_KEY
           startupProbe:
             httpGet:
               path: /

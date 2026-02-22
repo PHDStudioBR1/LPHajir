@@ -37,6 +37,7 @@ minikube addons disable ingress 2>/dev/null || true
 echo "Aplicando manifestos em $SCRIPT_DIR..."
 kubectl apply -f "$SCRIPT_DIR/namespace.yaml"
 kubectl apply -f "$SCRIPT_DIR/secrets.yaml"
+kubectl apply -f "$SCRIPT_DIR/contact-config.yaml"
 kubectl apply -f "$SCRIPT_DIR/deployment.yaml"
 kubectl apply -f "$SCRIPT_DIR/ingress.yaml"
 

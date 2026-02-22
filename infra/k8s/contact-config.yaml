@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: lphajir-contact-config
+  namespace: lphajir
+data:
+  NOTIFICATION_EMAIL: "donavan.alencar@gmail.com"
+  CRM_BASE_URL: "https://phdcrm.546digitalservices.com"
+  CRM_TENANT_SLUG: "hajir"
+  CRM_USER_ID: "1"
+  RESEND_FROM_EMAIL: "Hajir Site <onboarding@resend.dev>"
