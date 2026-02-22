@@ -7,9 +7,16 @@ export const contactFormSchema = z.object({
   email: z.string().email({
     message: "Por favor, insira um endereço de e-mail válido.",
   }),
-  whatsapp: z.string().min(10, {
-    message: "Por favor, insira um número de WhatsApp válido.",
-  }),
+  phone: z
+    .string()
+    .min(10, "Por favor, insira um número de WhatsApp válido.")
+    .refine((val) => {
+      const digits = val.replace(/\D/g, "")
+      return digits.length >= 10 && digits.length <= 13
+    }, {
+      message: "Por favor, insira um número válido (ex: 11 99999-9999).",
+    }),
+  message: z.string().optional(),
   consent: z.boolean().refine((val) => val === true, {
     message: "Você deve autorizar o uso dos seus dados.",
   }),

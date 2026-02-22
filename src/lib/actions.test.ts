@@ -10,7 +10,8 @@ describe("submitContactForm", () => {
     const formData = {
         name: "João Silva",
         email: "joao@exemplo.com",
-        whatsapp: "11999998888 - Interesse em consulta",
+        phone: "(11) 99999-8888",
+        message: "Interesse em consulta",
         consent: true,
     }
 
@@ -65,7 +66,7 @@ describe("submitContactForm", () => {
             expect.stringContaining("/leads"),
             expect.objectContaining({
                 method: "POST",
-                body: expect.stringContaining("joao@exemplo.com"),
+                body: expect.stringContaining("+5511999998888"),
             }),
         )
         expect(fetchMock).toHaveBeenCalledWith(

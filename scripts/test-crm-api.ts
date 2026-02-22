@@ -54,6 +54,7 @@ async function testCreateLead(token: string): Promise<number> {
         body: JSON.stringify({
             email: "teste-api@exemplo.com",
             first_name: "Teste API Script",
+            phone: "+5511999999999",
             custom_values: { observacao: "Lead criado pelo script de teste" },
         }),
     })

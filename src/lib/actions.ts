@@ -3,6 +3,7 @@
 import * as z from "zod"
 import { contactFormSchema } from "./schemas"
 import { sendLeadNotification } from "./email"
+import { formatPhoneForApi } from "./phone-utils"
 
 export async function submitContactForm(data: z.infer<typeof contactFormSchema>) {
     try {
@@ -40,8 +41,9 @@ export async function submitContactForm(data: z.infer<typeof contactFormSchema>)
             body: JSON.stringify({
                 email: data.email,
                 first_name: data.name,
+                phone: formatPhoneForApi(data.phone),
                 custom_values: {
-                    observacao: data.whatsapp,
+                    observacao: data.message ?? "",
                 },
             }),
         })
@@ -84,7 +86,7 @@ export async function submitContactForm(data: z.infer<typeof contactFormSchema>)
         const emailResult = await sendLeadNotification(TARGET_EMAIL, {
             name: data.name,
             email: data.email,
-            message: data.whatsapp,
+            message: data.message ?? "",
         })
         if (!emailResult.success) {
             console.warn("E-mail não enviado:", emailResult.error)
