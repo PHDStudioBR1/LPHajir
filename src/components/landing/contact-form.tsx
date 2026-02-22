@@ -15,6 +15,7 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { Checkbox } from "@/components/ui/checkbox"
 import { useToast } from "@/hooks/use-toast"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
@@ -67,7 +68,7 @@ export default function ContactForm() {
           <CardContent>
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   <FormField
                     control={form.control}
                     name="name"
@@ -75,9 +76,9 @@ export default function ContactForm() {
                       <FormItem>
                         <FormLabel className="text-primary font-semibold">Nome</FormLabel>
                         <div className="relative">
-                          <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-primary/40" />
+                          <User className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-primary/40 z-10" />
                           <FormControl>
-                            <Input placeholder="Seu nome" {...field} className="pl-10 border-primary/10 focus:border-primary" />
+                            <Input placeholder="Seu nome" {...field} className="pl-10 border-primary/10 focus:border-primary bg-background text-foreground" />
                           </FormControl>
                         </div>
                         <FormMessage />
@@ -91,9 +92,32 @@ export default function ContactForm() {
                       <FormItem>
                         <FormLabel className="text-primary font-semibold">E-mail</FormLabel>
                         <div className="relative">
-                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-primary/40" />
+                          <Mail className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-primary/40 z-10" />
                           <FormControl>
-                            <Input placeholder="seu@email.com" {...field} className="pl-10 border-primary/10 focus:border-primary" />
+                            <Input placeholder="seu@email.com" {...field} className="pl-10 border-primary/10 focus:border-primary bg-background text-foreground" />
+                          </FormControl>
+                        </div>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="phone"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-primary font-semibold">WhatsApp</FormLabel>
+                        <div className="relative">
+                          <FormControl>
+                            <Input
+                              placeholder="(11) 99999-9999"
+                              type="tel"
+                              className="pl-3 border-primary/10 focus:border-primary bg-background text-foreground"
+                              value={field.value}
+                              onBlur={field.onBlur}
+                              ref={field.ref}
+                              onChange={(e) => field.onChange(applyPhoneMask(e.target.value))}
+                            />
                           </FormControl>
                         </div>
                         <FormMessage />
@@ -104,45 +128,17 @@ export default function ContactForm() {
 
                 <FormField
                   control={form.control}
-                  name="phone"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel className="text-primary font-semibold">WhatsApp</FormLabel>
-                      <div className="relative">
-                        <FormControl>
-                          <Input
-                            placeholder="(11) 99999-9999"
-                            className="pl-10 border-primary/10 focus:border-primary"
-                            {...field}
-                            onChange={(e) => field.onChange(applyPhoneMask(e.target.value))}
-                          />
-                        </FormControl>
-                        <div className="absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none text-primary/40">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                          </svg>
-                        </div>
-                      </div>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
                   name="message"
                   render={({ field }) => (
                     <FormItem>
                       <FormLabel className="text-primary font-semibold">Mensagem / Observação</FormLabel>
-                      <div className="relative">
-                        <FormControl>
-                          <textarea
-                            placeholder="Como posso te ajudar?"
-                            {...field}
-                            className="w-full min-h-[120px] rounded-md border border-primary/10 p-4 focus:ring-2 focus:ring-primary focus:outline-none transition-all bg-white dark:bg-zinc-800 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-500 dark:placeholder:text-zinc-400"
-                          />
-                        </FormControl>
-                      </div>
+                      <FormControl>
+                        <Textarea
+                          placeholder="Como posso te ajudar?"
+                          {...field}
+                          className="min-h-[120px] border-primary/10 focus:ring-primary bg-white dark:bg-zinc-900 border border-input text-neutral-900 dark:text-neutral-100 placeholder:text-neutral-500"
+                        />
+                      </FormControl>
                       <FormMessage />
                     </FormItem>
                   )}
