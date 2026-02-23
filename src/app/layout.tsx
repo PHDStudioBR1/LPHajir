@@ -26,6 +26,19 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
           }}
         />
         {/* End Google Tag Manager */}
+        {/* Google tag (gtag.js) - GA4 */}
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-8SDRDH7QCQ" />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              window.dataLayer = window.dataLayer || [];
+              function gtag(){dataLayer.push(arguments);}
+              gtag('js', new Date());
+              gtag('config', 'G-8SDRDH7QCQ');
+            `,
+          }}
+        />
+        {/* End Google tag (gtag.js) */}
         <link rel="icon" type="image/png" href="/favicon.png?v=1" />
         <link rel="shortcut icon" href="/favicon.png?v=1" type="image/png" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
