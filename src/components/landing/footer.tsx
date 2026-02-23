@@ -27,14 +27,14 @@ export default function Footer() {
               Especialista em psiquiatria e saúde mental, oferecendo suporte especializado com empatia e acolhimento.
             </p>
             <div className="flex gap-4">
-              <a href="https://www.facebook.com/drahajirabdalla" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-accent transition-colors">
-                <Facebook className="h-5 w-5" />
+              <a href="https://www.facebook.com/drahajirabdalla" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-accent transition-colors" aria-label="Facebook da Dra. Hajir Abdalla">
+                <Facebook className="h-5 w-5" aria-hidden />
               </a>
-              <a href="https://www.instagram.com/drahaabdalla/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-accent transition-colors">
-                <Instagram className="h-5 w-5" />
+              <a href="https://www.instagram.com/drahaabdalla/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-accent transition-colors" aria-label="Instagram da Dra. Hajir Abdalla">
+                <Instagram className="h-5 w-5" aria-hidden />
               </a>
-              <a href="https://www.tiktok.com/@drahaabdalla" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-accent transition-colors">
-                <TikTokIcon className="h-5 w-5" />
+              <a href="https://www.tiktok.com/@drahaabdalla" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-accent transition-colors" aria-label="TikTok da Dra. Hajir Abdalla">
+                <TikTokIcon className="h-5 w-5" aria-hidden />
               </a>
             </div>
           </div>

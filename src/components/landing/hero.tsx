@@ -32,8 +32,9 @@ export default function Hero() {
               src="https://www.youtube.com/embed/ze8wf03ZL6s?rel=0&autoplay=1&mute=1&loop=1&playlist=ze8wf03ZL6s&showinfo=0&controls=1"
               title="Vídeo Dra. Hajir Abdalla"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-              allowFullScreen>
-            </iframe>
+              allowFullScreen
+              loading="lazy"
+            />
           </div>
 
           <div className="flex flex-col items-center md:items-start gap-2 w-full md:w-max">
