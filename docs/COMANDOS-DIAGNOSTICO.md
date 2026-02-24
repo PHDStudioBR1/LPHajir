@@ -96,7 +96,19 @@ ls -la /home/ubuntu/drahajirabdalla.com.br/ssl/
 
 ---
 
-## 12. Script de Testes Automatizado
+## 12. Logs Resend (formulário de contato)
+
+Use após enviar um lead pelo site, para ver se o e-mail foi enviado e se houve erro:
+
+```bash
+docker logs -f --tail=100 lphajir-web 2>&1 | egrep "Resend|E-mail de lead|Erro CRM|CRM login|CRM create lead|CRM create activity"
+```
+
+Para análise completa, cole a saída junto com o status do último e-mail no painel Resend e o valor de `RESEND_FROM_EMAIL`. Ver `docs/EMAIL-RESEND.md`.
+
+---
+
+## 13. Script de Testes Automatizado
 
 ```bash
 cd /root/LPHajir && ./scripts/test-apis.sh 2>&1
@@ -104,7 +116,7 @@ cd /root/LPHajir && ./scripts/test-apis.sh 2>&1
 
 ---
 
-## 13. Portas em Uso
+## 14. Portas em Uso
 
 ```bash
 ss -tlnp | grep -E ':80|:443|:3000'
@@ -136,6 +148,9 @@ ss -tlnp | grep -E ':80|:443|:3000'
   echo ""
   echo "=== 7. TESTE LOCALHOST ==="
   curl -sI http://127.0.0.1:3000 2>&1 | head -5
+  echo ""
+  echo "=== 8. LOGS RESEND (últimos 100) ==="
+  docker logs lphajir-web --tail=100 2>&1 | egrep "Resend|E-mail de lead|Erro CRM|CRM" || true
 } 2>&1
 ```
 

@@ -8,4 +8,5 @@ data:
   CRM_BASE_URL: "https://phdcrm.546digitalservices.com"
   CRM_TENANT_SLUG: "hajir"
   CRM_USER_ID: "1"
+  ENABLE_CRM: "true"
   RESEND_FROM_EMAIL: "Hajir Site <onboarding@resend.dev>"

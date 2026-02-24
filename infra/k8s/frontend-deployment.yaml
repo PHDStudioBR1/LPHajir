@@ -55,6 +55,11 @@ spec:
                 configMapKeyRef:
                   name: lphajir-contact-config
                   key: CRM_USER_ID
+            - name: ENABLE_CRM
+              valueFrom:
+                configMapKeyRef:
+                  name: lphajir-contact-config
+                  key: ENABLE_CRM
             - name: RESEND_FROM_EMAIL
               valueFrom:
                 configMapKeyRef:

@@ -94,6 +94,7 @@ export async function submitContactForm(data: z.infer<typeof contactFormSchema>)
             console.error("CRM create lead: no id in response", leadData)
             throw new Error("CRM create lead: no lead id")
         }
+        console.log("CRM lead created:", LEAD_ID, "email:", data.email)
 
         // 4) Criar Atividade
         const activityRes = await fetchWithTimeout(`${CRM_API}/activities`, {
