@@ -104,7 +104,7 @@ export default function Testimonials() {
         </Carousel>
         <div className="mt-16 flex justify-center">
           <Button asChild className="bg-cta hover:bg-accent text-white font-bold text-xl px-12 py-8 h-auto rounded-full shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95">
-            <a href="https://wa.me/5511977920368" target="_blank" rel="noopener noreferrer">
+            <a href="/#contact">
               Reserve sua vaga hoje
             </a>
           </Button>

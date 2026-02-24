@@ -50,7 +50,7 @@ export default function Footer() {
           <div className="flex flex-col space-y-6">
             <h3 className="font-bold text-lg text-white">Agende agora</h3>
             <Button asChild className="bg-cta hover:bg-accent text-white font-bold h-auto py-4 rounded-full transition-all">
-              <a href="https://wa.me/5511977920368" target="_blank" rel="noopener noreferrer">
+              <a href="/#contact">
                 Comece sua jornada hoje
               </a>
             </Button>

@@ -63,7 +63,7 @@ export default function UrgencySection() {
                     </div>
 
                     <Button asChild className="bg-cta hover:bg-accent text-white font-bold text-xl px-12 py-8 h-auto rounded-full shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 mt-8">
-                        <a href="/formulario">
+                        <a href="/#contact">
                             Garanta sua vaga agora
                         </a>
                     </Button>

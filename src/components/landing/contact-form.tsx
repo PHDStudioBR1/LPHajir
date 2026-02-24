@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { Loader2, Mail, User } from "lucide-react"
+import { Loader2, Mail, MessageCircle, User } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -77,6 +77,12 @@ export default function ContactForm() {
             <CardDescription>
               Prefere enviar uma mensagem? Preencha o formulário abaixo.
             </CardDescription>
+            <div className="mx-auto mt-3 flex max-w-md items-start gap-3 rounded-lg border border-primary/15 bg-primary/5 px-4 py-3 text-left">
+              <MessageCircle className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+              <p className="text-sm font-medium text-foreground">
+                Após enviar seus dados, você será redirecionado ao <span className="font-semibold text-primary">WhatsApp</span> para falar diretamente com nossa equipe — resposta rápida e atendimento humanizado.
+              </p>
+            </div>
           </CardHeader>
           <CardContent className="relative">
             {isSubmitting && (
@@ -185,6 +191,9 @@ export default function ContactForm() {
                   )}
                 />
 
+                <p className="text-center text-xs text-muted-foreground">
+                  Ao clicar em enviar, seus dados serão enviados com segurança e em seguida abriremos o WhatsApp para você.
+                </p>
                 <Button
                   type="submit"
                   disabled={isSubmitting}
@@ -197,7 +206,7 @@ export default function ContactForm() {
                       Enviando...
                     </>
                   ) : (
-                    "Enviar Mensagem"
+                    "Enviar e ir para o WhatsApp"
                   )}
                 </Button>
               </form>
