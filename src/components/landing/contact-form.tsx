@@ -1,10 +1,11 @@
 "use client"
 
 import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { Check, Loader2, Mail, User } from "lucide-react"
+import { Loader2, Mail, User } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -25,6 +26,7 @@ import { contactFormSchema } from "@/lib/schemas"
 import { applyPhoneMask } from "@/lib/phone-utils"
 
 export default function ContactForm() {
+  const router = useRouter();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -44,12 +46,9 @@ export default function ContactForm() {
     try {
       const result = await submitContactForm(values);
       if (result.success) {
-        toast({
-          title: `Obrigado, ${result.name}!`,
-          description: "Sua mensagem foi enviada. Entrarei em contato em breve.",
-          action: <Check className="h-5 w-5 text-green-500" />,
-        })
         form.reset();
+        router.push("/obrigado");
+        return;
       } else {
         toast({
           variant: "destructive",

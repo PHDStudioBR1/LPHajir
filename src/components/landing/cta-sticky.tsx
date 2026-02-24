@@ -15,9 +15,7 @@ export default function CtaSticky() {
     >
       <div className="w-full bg-background/95 backdrop-blur-sm border-t border-border px-4 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]">
         <a
-          href="https://wa.me/5511977920368"
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/formulario"
           className="flex items-center justify-center gap-2 w-full bg-green-600 hover:bg-green-700 text-white font-bold text-base py-4 px-6 rounded-full shadow-lg transition-colors duration-200 active:scale-[0.98]"
         >
           <WhatsAppIcon className="h-5 w-5 shrink-0" />
