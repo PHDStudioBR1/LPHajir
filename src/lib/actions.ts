@@ -33,10 +33,12 @@ export async function submitContactForm(data: z.infer<typeof contactFormSchema>)
     })
 
     if (!ENABLE_CRM) {
-        if (emailResult.success) {
-            return { success: true, name: data.name }
+        if (!emailResult.success) {
+            console.error(
+                "Falha ao enviar e-mail de lead via Resend. Verifique RESEND_API_KEY/RESEND_FROM_EMAIL. Prosseguindo para não travar o formulário.",
+            )
         }
-        return { success: false }
+        return { success: true, name: data.name }
     }
 
     try {
