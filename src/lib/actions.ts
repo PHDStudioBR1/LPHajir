@@ -22,7 +22,8 @@ async function fetchWithTimeout(
 export async function submitContactForm(data: z.infer<typeof contactFormSchema>) {
     const CRM_BASE = process.env.CRM_BASE_URL || "https://phdcrm.546digitalservices.com"
     const CRM_API = `${CRM_BASE.replace(/\/$/, "")}/api/crm/v1`
-    const TARGET_EMAIL = process.env.NOTIFICATION_EMAIL || "donavan.alencar@gmail.com"
+    const TARGET_EMAIL = process.env.NOTIFICATION_EMAIL || "drahaabdalla@gmail.com"
+    const ENABLE_CRM = process.env.ENABLE_CRM === "true"
 
     // 1) E-mail primeiro (mais rápido, garante que não perdemos o lead)
     const emailResult = await sendLeadNotification(TARGET_EMAIL, {
@@ -30,6 +31,13 @@ export async function submitContactForm(data: z.infer<typeof contactFormSchema>)
         email: data.email,
         message: `${data.message ?? ""}\n\nWhatsApp: ${data.phone}`,
     })
+
+    if (!ENABLE_CRM) {
+        if (emailResult.success) {
+            return { success: true, name: data.name }
+        }
+        return { success: false }
+    }
 
     try {
         // 2) Login no CRM

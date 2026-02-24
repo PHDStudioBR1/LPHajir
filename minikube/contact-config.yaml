@@ -4,7 +4,7 @@ metadata:
   name: lphajir-contact-config
   namespace: lphajir
 data:
-  NOTIFICATION_EMAIL: "donavan.alencar@gmail.com"
+  NOTIFICATION_EMAIL: "drahaabdalla@gmail.com"
   CRM_BASE_URL: "https://phdcrm.546digitalservices.com"
   CRM_TENANT_SLUG: "hajir"
   CRM_USER_ID: "1"

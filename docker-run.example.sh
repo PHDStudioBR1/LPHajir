@@ -6,7 +6,7 @@ docker run -d \
   --name lphajir-web \
   --restart always \
   -p 3000:3000 \
-  -e NOTIFICATION_EMAIL="donavan.alencar@gmail.com" \
+  -e NOTIFICATION_EMAIL="drahaabdalla@gmail.com" \
   -e CRM_BASE_URL="https://phdcrm.546digitalservices.com" \
   -e CRM_TENANT_SLUG="hajir" \
   -e CRM_USER_ID="1" \
