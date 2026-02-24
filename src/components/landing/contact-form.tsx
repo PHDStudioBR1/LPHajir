@@ -84,12 +84,17 @@ export default function ContactForm() {
               </p>
             </div>
           </CardHeader>
-          <CardContent className="relative">
+            <CardContent className="relative">
             {isSubmitting && (
-              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-lg bg-background/80 backdrop-blur-sm">
-                <Loader2 className="h-12 w-12 animate-spin text-primary" />
-                <p className="mt-3 text-sm font-medium text-foreground">Processando sua mensagem...</p>
-                <p className="mt-1 text-xs text-muted-foreground">Aguarde um momento</p>
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-lg bg-background/90 backdrop-blur-sm text-center px-6">
+                <Loader2 className="h-14 w-14 animate-spin text-primary" />
+                <p className="mt-4 text-lg md:text-xl font-bold text-foreground">
+                  Aguarde um instante
+                </p>
+                <p className="mt-2 text-sm md:text-base font-medium text-muted-foreground">
+                  Estamos enviando seus dados com segurança e em seguida você será redirecionado para nossa equipe
+                  no WhatsApp para concluir o atendimento.
+                </p>
               </div>
             )}
             <Form {...form}>

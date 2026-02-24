@@ -24,16 +24,17 @@ export default function ObrigadoPage() {
             <CheckCircle2 className="h-16 w-16 text-green-600 dark:text-green-400" />
           </div>
         </div>
-        <div className="space-y-3">
-          <h1 className="font-headline text-2xl md:text-3xl font-bold text-primary">
-            Sua mensagem foi recebida com sucesso!
+        <div className="space-y-4">
+          <h1 className="font-headline text-2xl md:text-3xl font-extrabold text-primary">
+            Tudo certo! Sua mensagem foi enviada.
           </h1>
-          <p className="text-muted-foreground text-lg">
-            Redirecionando para o WhatsApp...
+          <p className="text-muted-foreground text-lg md:text-xl font-semibold">
+            Por favor, aguarde alguns segundos: você será redirecionado automaticamente para o atendimento da
+            equipe pelo WhatsApp.
           </p>
         </div>
-        <p className="text-sm text-muted-foreground">
-          Se não for redirecionado em alguns segundos, use o botão abaixo.
+        <p className="text-sm md:text-base text-muted-foreground">
+          Se o redirecionamento não acontecer, use o botão abaixo para falar com nossa equipe agora mesmo.
         </p>
         <Button
           id="whatsapp-manual-fallback"
