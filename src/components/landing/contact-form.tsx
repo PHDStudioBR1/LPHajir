@@ -25,7 +25,11 @@ import { submitContactForm } from "@/lib/actions"
 import { contactFormSchema } from "@/lib/schemas"
 import { applyPhoneMask } from "@/lib/phone-utils"
 
-export default function ContactForm() {
+type ContactFormProps = {
+  web3FormsKey?: string
+}
+
+export default function ContactForm({ web3FormsKey }: ContactFormProps) {
   const router = useRouter();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -46,6 +50,30 @@ export default function ContactForm() {
     try {
       const result = await submitContactForm(values);
       if (result.success) {
+        // Dispara envio de e-mail via Web3Forms no cliente (não bloqueia o CRM)
+        if (web3FormsKey) {
+          try {
+            await fetch("https://api.web3forms.com/submit", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              },
+              body: JSON.stringify({
+                access_key: web3FormsKey,
+                subject: `[Hajir] Novo lead: ${values.name}`,
+                email: values.email,
+                name: values.name,
+                message: `${values.message ?? ""}\n\nWhatsApp: ${values.phone}`,
+                to: "drahaabdalla@gmail.com",
+              }),
+            });
+          } catch (err) {
+            console.error("Erro ao enviar e-mail via Web3Forms no cliente:", err);
+          }
+        } else {
+          console.warn("Web3Forms desabilitado: web3FormsKey não informado ao componente.");
+        }
         form.reset();
         router.push("/obrigado");
         return;

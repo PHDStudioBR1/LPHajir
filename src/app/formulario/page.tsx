@@ -10,6 +10,7 @@ export const metadata = {
 }
 
 export default function FormularioPage() {
+  const web3FormsKey = process.env.CONTACT_FORM_KEY;
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
@@ -26,7 +27,7 @@ export default function FormularioPage() {
               Voltar ao início
             </Link>
           </Button>
-          <ContactForm />
+          <ContactForm web3FormsKey={web3FormsKey} />
         </div>
       </main>
     </div>

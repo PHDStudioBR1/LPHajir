@@ -9,6 +9,7 @@ import CtaSticky from '@/components/landing/cta-sticky';
 import UrgencySection from '@/components/landing/urgency-section';
 
 export default function Home() {
+  const web3FormsKey = process.env.CONTACT_FORM_KEY;
   return (
     <div className="flex min-h-screen flex-col">
       <div className="fixed top-0 left-0 right-0 z-[9999]">
@@ -20,7 +21,7 @@ export default function Home() {
         <Specialties />
         <Testimonials />
         <UrgencySection />
-        <ContactForm />
+        <ContactForm web3FormsKey={web3FormsKey} />
       </main>
       <Footer />
       <CtaSticky />
