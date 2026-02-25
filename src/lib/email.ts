@@ -1,5 +1,3 @@
-import { Resend } from "resend"
-
 export type LeadNotificationData = {
     name: string
     email: string
@@ -8,22 +6,17 @@ export type LeadNotificationData = {
 
 /**
  * Envia e-mail de notificação quando um novo lead é criado no formulário.
- * Usa Resend (resend.com). Configure RESEND_API_KEY no ambiente.
- * Para testes, use "onboarding@resend.dev" como from (domínio verificado do Resend).
+ * Usa Web3Forms (https://web3forms.com). Configure CONTACT_FORM_KEY no ambiente.
  */
 export async function sendLeadNotification(
     to: string,
     data: LeadNotificationData,
 ): Promise<{ success: boolean; error?: string }> {
-    const apiKey = process.env.RESEND_API_KEY
-    if (!apiKey) {
-        console.warn("RESEND_API_KEY não configurado. E-mail não enviado.")
-        return { success: false, error: "RESEND_API_KEY não configurado" }
+    const accessKey = process.env.CONTACT_FORM_KEY
+    if (!accessKey) {
+        console.warn("CONTACT_FORM_KEY não configurado. E-mail não enviado.")
+        return { success: false, error: "CONTACT_FORM_KEY não configurado" }
     }
-
-    const from = process.env.RESEND_FROM_EMAIL || "Hajir Site <onboarding@resend.dev>"
-
-    const resend = new Resend(apiKey)
 
     const html = `
 <!DOCTYPE html>
@@ -41,20 +34,46 @@ export async function sendLeadNotification(
 </html>
 `.trim()
 
-    const { data: result, error } = await resend.emails.send({
-        from,
-        to: [to],
-        subject: `[Hajir] Novo lead: ${data.name}`,
-        html,
-    })
+    try {
+        const response = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+            body: JSON.stringify({
+                access_key: accessKey,
+                subject: `[Hajir] Novo lead: ${data.name}`,
+                email: data.email,
+                name: data.name,
+                message: data.message,
+                to,
+                html,
+            }),
+        })
 
-    if (error) {
-        console.error("Erro ao enviar e-mail via Resend:", error)
+        if (!response.ok) {
+            const errorText = await safeReadText(response)
+            console.error(
+                "Erro ao enviar e-mail via Web3Forms (HTTP):",
+                response.status,
+                errorText,
+            )
+            return { success: false, error: `HTTP ${response.status}` }
+        }
+
+        const json = await safeReadJson(response)
+        if (json && json.success === false) {
+            console.error("Erro ao enviar e-mail via Web3Forms (payload):", json)
+            return { success: false, error: json.message ?? "Erro Web3Forms" }
+        }
+
+        console.log(`E-mail de lead enviado via Web3Forms para ${to}`)
+        return { success: true }
+    } catch (error) {
+        console.error("Erro ao enviar e-mail via Web3Forms:", error)
         return { success: false, error: String(error) }
     }
-
-    console.log(`E-mail de lead enviado para ${to}, id: ${result?.id}`)
-    return { success: true }
 }
 
 function escapeHtml(text: string): string {
@@ -64,4 +83,20 @@ function escapeHtml(text: string): string {
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;")
+}
+
+async function safeReadText(response: Response): Promise<string> {
+    try {
+        return await response.text()
+    } catch {
+        return ""
+    }
+}
+
+async function safeReadJson(response: Response): Promise<any | null> {
+    try {
+        return await response.json()
+    } catch {
+        return null
+    }
 }

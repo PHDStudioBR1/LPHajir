@@ -12,7 +12,6 @@ docker run -d \
   -e CRM_USER_ID="1" \
   -e CRM_ADMIN_EMAIL="admin@hajir" \
   -e CRM_ADMIN_PASSWORD="SUA_SENHA_CRM" \
-  -e RESEND_API_KEY="re_SUA_CHAVE_RESEND" \
-  -e RESEND_FROM_EMAIL="Dra. Hajir <onboarding@resend.dev>" \
+  -e CONTACT_FORM_KEY="SUA_ACCESS_KEY_WEB3FORMS" \
   --network drahajirabdalla_drahajirabdalla-network \
   donavanalencar/lphajir-web:latest

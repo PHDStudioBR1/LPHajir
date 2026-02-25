@@ -16,14 +16,13 @@ Para o deploy Docker funcionar corretamente (evitar 502 e formulário quebrado),
 
 | Secret | Descrição |
 |--------|-----------|
-| `RESEND_API_KEY` | Chave da API Resend (resend.com) |
+| `CONTACT_FORM_KEY` | Chave da API Web3Forms (https://web3forms.com) |
 | `NOTIFICATION_EMAIL` | E-mail para receber os leads (ex: phdstudiobr@gmail.com) |
 
 ## Opcionais (ajustar se necessário)
 
 | Secret | Descrição | Padrão |
 |--------|-----------|--------|
-| `RESEND_FROM_EMAIL` | Remetente do e-mail | (usa onboarding@resend.dev) |
 | `ENABLE_CRM` | Enviar leads para o CRM PHD (`true` ou `false`) | `false` (Docker) / `true` (K8s) |
 | `CRM_BASE_URL` | URL do CRM PHD | https://phdcrm.546digitalservices.com |
 | `CRM_TENANT_SLUG` | Tenant do CRM | hajir |
@@ -42,4 +41,4 @@ Para o deploy Docker funcionar corretamente (evitar 502 e formulário quebrado),
 ## O que foi corrigido no deploy
 
 1. **502 Bad Gateway**: O container agora é criado com `--network`, na mesma rede do Nginx
-2. **Formulário não envia**: Variáveis de ambiente (Resend, CRM) são passadas ao container
+2. **Formulário não envia**: Variáveis de ambiente (Web3Forms, CRM) são passadas ao container

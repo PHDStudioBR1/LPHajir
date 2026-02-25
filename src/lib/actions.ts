@@ -5,7 +5,7 @@ import { contactFormSchema } from "./schemas"
 import { sendLeadNotification } from "./email"
 import { formatPhoneForApi } from "./phone-utils"
 
-const FETCH_TIMEOUT_MS = 20000 // 20s por requisição - evita travar se CRM/Resend lentos
+const FETCH_TIMEOUT_MS = 20000 // 20s por requisição - evita travar se CRM/e-mail lentos
 
 async function fetchWithTimeout(
     url: string,
@@ -35,7 +35,7 @@ export async function submitContactForm(data: z.infer<typeof contactFormSchema>)
     if (!ENABLE_CRM) {
         if (!emailResult.success) {
             console.error(
-                "Falha ao enviar e-mail de lead via Resend. Verifique RESEND_API_KEY/RESEND_FROM_EMAIL. Prosseguindo para não travar o formulário.",
+                "Falha ao enviar e-mail de lead via Web3Forms. Verifique CONTACT_FORM_KEY/NOTIFICATION_EMAIL/Web3Forms. Prosseguindo para não travar o formulário.",
             )
         }
         return { success: true, name: data.name }
