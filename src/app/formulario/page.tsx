@@ -10,7 +10,7 @@ export const metadata = {
 }
 
 export default function FormularioPage() {
-  const web3FormsKey = process.env.CONTACT_FORM_KEY;
+  const web3FormsKey = "dd4b6848-e3c9-408c-9afe-44237862965c";
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
