@@ -40,7 +40,7 @@ docker network inspect drahajirabdalla_drahajirabdalla-network
 ## 5. Variáveis de Ambiente do Container
 
 ```bash
-docker exec lphajir-web env | grep -E "CRM|RESEND|NOTIFICATION"
+docker exec lphajir-web env | grep -E "CRM|CONTACT_FORM_KEY|NOTIFICATION|ENABLE_CRM"
 ```
 
 ---
@@ -96,15 +96,15 @@ ls -la /home/ubuntu/drahajirabdalla.com.br/ssl/
 
 ---
 
-## 12. Logs Resend (formulário de contato)
+## 12. Logs de formulário (Web3Forms + CRM)
 
 Use após enviar um lead pelo site, para ver se o e-mail foi enviado e se houve erro:
 
 ```bash
-docker logs -f --tail=100 lphajir-web 2>&1 | egrep "Resend|E-mail de lead|Erro CRM|CRM login|CRM create lead|CRM create activity"
+docker logs -f --tail=100 lphajir-web 2>&1 | egrep "Web3Forms|E-mail de lead|Erro CRM|CRM login|CRM create lead|CRM create activity"
 ```
 
-Para análise completa, cole a saída junto com o status do último e-mail no painel Resend e o valor de `RESEND_FROM_EMAIL`. Ver `docs/EMAIL-RESEND.md`.
+Para análise completa, cole a saída junto com o status do último envio no painel Web3Forms e o valor de `CONTACT_FORM_KEY`. Ver `docs/DEPLOY-SECRETS.md`.
 
 ---
 
@@ -149,8 +149,8 @@ ss -tlnp | grep -E ':80|:443|:3000'
   echo "=== 7. TESTE LOCALHOST ==="
   curl -sI http://127.0.0.1:3000 2>&1 | head -5
   echo ""
-  echo "=== 8. LOGS RESEND (últimos 100) ==="
-  docker logs lphajir-web --tail=100 2>&1 | egrep "Resend|E-mail de lead|Erro CRM|CRM" || true
+  echo "=== 8. LOGS FORM (últimos 100) ==="
+  docker logs lphajir-web --tail=100 2>&1 | egrep "Web3Forms|E-mail de lead|Erro CRM|CRM" || true
 } 2>&1
 ```
 

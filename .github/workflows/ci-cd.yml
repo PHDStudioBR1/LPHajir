@@ -148,8 +148,7 @@ jobs:
       - name: Executar Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         env:
-          RESEND_API_KEY: ${{ secrets.RESEND_API_KEY }}
-          RESEND_FROM_EMAIL: ${{ secrets.RESEND_FROM_EMAIL }}
+          CONTACT_FORM_KEY: ${{ secrets.CONTACT_FORM_KEY }}
           NOTIFICATION_EMAIL: ${{ secrets.NOTIFICATION_EMAIL }}
           CRM_BASE_URL: ${{ secrets.CRM_BASE_URL }}
           CRM_TENANT_SLUG: ${{ secrets.CRM_TENANT_SLUG }}
@@ -163,7 +162,7 @@ jobs:
           username: ${{ secrets.DOCKER_SERVER_USER }}
           key: ${{ secrets.DOCKER_SERVER_SSH_KEY }}
           password: ${{ secrets.DOCKER_SERVER_PASSWORD }}
-          envs: RESEND_API_KEY,RESEND_FROM_EMAIL,NOTIFICATION_EMAIL,CRM_BASE_URL,CRM_TENANT_SLUG,CRM_USER_ID,CRM_ADMIN_EMAIL,CRM_ADMIN_PASSWORD,ENABLE_CRM,DOCKER_NETWORK
+          envs: CONTACT_FORM_KEY,NOTIFICATION_EMAIL,CRM_BASE_URL,CRM_TENANT_SLUG,CRM_USER_ID,CRM_ADMIN_EMAIL,CRM_ADMIN_PASSWORD,ENABLE_CRM,DOCKER_NETWORK
           script: |
             set -e
             echo "=== Pulling image ==="
@@ -180,8 +179,7 @@ jobs:
               --restart always \
               -p 3000:3000 \
               --network "$NETWORK" \
-              -e "RESEND_API_KEY=${RESEND_API_KEY}" \
-              -e "RESEND_FROM_EMAIL=${RESEND_FROM_EMAIL}" \
+              -e "CONTACT_FORM_KEY=${CONTACT_FORM_KEY}" \
               -e "NOTIFICATION_EMAIL=${NOTIFICATION_EMAIL}" \
               -e "CRM_BASE_URL=${CRM_BASE_URL}" \
               -e "CRM_TENANT_SLUG=${CRM_TENANT_SLUG}" \
