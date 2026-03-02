@@ -10,7 +10,8 @@ export const metadata = {
 }
 
 export default function FormularioPage() {
-  const web3FormsKey = "dd4b6848-e3c9-408c-9afe-44237862965c";
+  const web3FormsKey = process.env.NEXT_PUBLIC_CONTACT_FORM_KEY ?? undefined
+  const notificationEmail = process.env.NEXT_PUBLIC_NOTIFICATION_EMAIL ?? undefined
   return (
     <div className="flex min-h-screen flex-col bg-background">
       <Header />
@@ -27,7 +28,7 @@ export default function FormularioPage() {
               Voltar ao início
             </Link>
           </Button>
-          <ContactForm web3FormsKey={web3FormsKey} />
+          <ContactForm web3FormsKey={web3FormsKey} notificationEmail={notificationEmail} />
         </div>
       </main>
     </div>

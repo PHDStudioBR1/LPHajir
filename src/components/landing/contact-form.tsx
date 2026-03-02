@@ -23,13 +23,16 @@ import { useToast } from "@/hooks/use-toast"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { submitContactForm } from "@/lib/actions"
 import { contactFormSchema } from "@/lib/schemas"
+import { DEFAULT_NOTIFICATION_EMAIL } from "@/lib/email-config"
 import { applyPhoneMask } from "@/lib/phone-utils"
 
 type ContactFormProps = {
   web3FormsKey?: string
+  /** E-mail que recebe os leads (padrão: drahaabdalla@gmail.com) */
+  notificationEmail?: string
 }
 
-export default function ContactForm({ web3FormsKey }: ContactFormProps) {
+export default function ContactForm({ web3FormsKey, notificationEmail = DEFAULT_NOTIFICATION_EMAIL }: ContactFormProps) {
   const router = useRouter();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -65,7 +68,7 @@ export default function ContactForm({ web3FormsKey }: ContactFormProps) {
                 email: values.email,
                 name: values.name,
                 message: `${values.message ?? ""}\n\nWhatsApp: ${values.phone}`,
-                to: "drahaabdalla@gmail.com",
+                to: notificationEmail,
               }),
             });
           } catch (err) {

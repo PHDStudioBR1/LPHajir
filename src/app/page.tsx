@@ -9,7 +9,8 @@ import CtaSticky from '@/components/landing/cta-sticky';
 import UrgencySection from '@/components/landing/urgency-section';
 
 export default function Home() {
-  const web3FormsKey = "dd4b6848-e3c9-408c-9afe-44237862965c";
+  const web3FormsKey = process.env.NEXT_PUBLIC_CONTACT_FORM_KEY ?? undefined
+  const notificationEmail = process.env.NEXT_PUBLIC_NOTIFICATION_EMAIL ?? undefined
   return (
     <div className="flex min-h-screen flex-col">
       <div className="fixed top-0 left-0 right-0 z-[9999]">
@@ -21,7 +22,7 @@ export default function Home() {
         <Specialties />
         <Testimonials />
         <UrgencySection />
-        <ContactForm web3FormsKey={web3FormsKey} />
+        <ContactForm web3FormsKey={web3FormsKey} notificationEmail={notificationEmail} />
       </main>
       <Footer />
       <CtaSticky />

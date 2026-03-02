@@ -16,8 +16,8 @@ Para o deploy Docker funcionar corretamente (evitar 502 e formulário quebrado),
 
 | Secret | Descrição |
 |--------|-----------|
-| `CONTACT_FORM_KEY` | Chave da API Web3Forms (https://web3forms.com) |
-| `NOTIFICATION_EMAIL` | E-mail para receber os leads (ex: phdstudiobr@gmail.com) |
+| `CONTACT_FORM_KEY` | Chave da API Web3Forms. Quem usa **drahaabdalla@gmail.com** deve seguir **docs/MANUAL-CREDENCIAIS-EMAIL.md** para criar a chave em https://web3forms.com/#start |
+| `NOTIFICATION_EMAIL` | E-mail para receber os leads. Padrão do projeto: **drahaabdalla@gmail.com** |
 
 ## Opcionais (ajustar se necessário)
 

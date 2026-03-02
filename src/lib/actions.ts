@@ -3,6 +3,7 @@
 import * as z from "zod"
 import { contactFormSchema } from "./schemas"
 import { sendLeadNotification } from "./email"
+import { DEFAULT_NOTIFICATION_EMAIL } from "./email-config"
 import { formatPhoneForApi } from "./phone-utils"
 
 const FETCH_TIMEOUT_MS = 20000 // 20s por requisição - evita travar se CRM/e-mail lentos
@@ -22,7 +23,7 @@ async function fetchWithTimeout(
 export async function submitContactForm(data: z.infer<typeof contactFormSchema>) {
     const CRM_BASE = process.env.CRM_BASE_URL || "https://phdcrm.546digitalservices.com"
     const CRM_API = `${CRM_BASE.replace(/\/$/, "")}/api/crm/v1`
-    const TARGET_EMAIL = process.env.NOTIFICATION_EMAIL || "drahaabdalla@gmail.com"
+    const TARGET_EMAIL = process.env.NOTIFICATION_EMAIL || DEFAULT_NOTIFICATION_EMAIL
     const ENABLE_CRM = process.env.ENABLE_CRM === "true"
 
     // 1) E-mail primeiro (mais rápido, garante que não perdemos o lead)
