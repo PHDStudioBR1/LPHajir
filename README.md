@@ -13,3 +13,5 @@ O projeto inclui um mecanismo de backup com rotação:
 - **Execução manual:** `./scripts/backup.sh`
 - **Execução diária (cron):** `./scripts/install-backup-cron.sh` — agenda o backup todo dia às 02:00. Log em `logs/backup-cron.log`.
 - **Variáveis opcionais:** `BACKUP_DIR`, `KEEP_COUNT` (padrão 7), `BACKUP_CRON_HOUR`, `BACKUP_CRON_MINUTE`.
+
+Configurado o email correto para Hajir
