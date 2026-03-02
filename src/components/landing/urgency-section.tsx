@@ -34,7 +34,7 @@ export default function UrgencySection() {
                     </div>
 
                     <h2 className="text-3xl md:text-5xl font-bold text-white font-headline leading-tight max-w-2xl">
-                        Agenda limitada para fevereiro – garanta seu horário.
+                        Agenda limitada para este mês – garanta seu horário.
                     </h2>
 
                     <p className="text-white/80 text-lg md:text-xl max-w-xl font-medium">
