@@ -165,12 +165,24 @@ jobs:
           envs: CONTACT_FORM_KEY,NOTIFICATION_EMAIL,CRM_BASE_URL,CRM_TENANT_SLUG,CRM_USER_ID,CRM_ADMIN_EMAIL,CRM_ADMIN_PASSWORD,ENABLE_CRM,DOCKER_NETWORK
           script: |
             set -e
-            echo "=== Pulling image ==="
-            docker pull ${{ env.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+            echo "=== Disk space (before cleanup) ==="
+            df -h /
+            docker system df || true
 
-            echo "=== Stopping and removing old container ==="
+            echo "=== Stopping and removing current container ==="
             docker stop ${{ env.IMAGE_NAME }} 2>/dev/null || true
             docker rm ${{ env.IMAGE_NAME }} 2>/dev/null || true
+
+            echo "=== Freeing disk space: pruning unused Docker data ==="
+            docker system prune -af || true
+            docker builder prune -af || true
+
+            echo "=== Disk space (after cleanup) ==="
+            df -h /
+            docker system df || true
+
+            echo "=== Pulling image ==="
+            docker pull ${{ env.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:latest
 
             echo "=== Starting new container ==="
             NETWORK="${DOCKER_NETWORK:-drahajirabdalla_drahajirabdalla-network}"
