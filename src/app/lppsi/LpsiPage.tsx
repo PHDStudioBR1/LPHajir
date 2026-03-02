@@ -2,7 +2,11 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import Image from 'next/image';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import * as z from 'zod';
 import {
   Video,
   MessageCircle,
@@ -25,7 +29,24 @@ import {
   Facebook,
   Music2,
   ArrowRight,
+  Loader2,
 } from 'lucide-react';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
+import { Checkbox } from '@/components/ui/checkbox';
+import { useToast } from '@/hooks/use-toast';
+import { submitContactForm } from '@/lib/actions';
+import { contactFormSchema } from '@/lib/schemas';
+import { DEFAULT_NOTIFICATION_EMAIL } from '@/lib/email-config';
+import { applyPhoneMask } from '@/lib/phone-utils';
 
 const LPPSI_LOGO =
   'https://raw.githubusercontent.com/PHDStudioBR1/Hajer/main/Logo%20Site.svg';
@@ -84,7 +105,7 @@ function LpsiHeader() {
     { label: 'Como funciona', href: '#como-funciona' },
     { label: 'Depoimentos', href: '#depoimentos' },
     { label: 'FAQs', href: '#faq' },
-    { label: 'Contato', href: '#contato' },
+    { label: 'Contato', href: '/#contact' },
   ];
 
   const headerBg =
@@ -124,14 +145,12 @@ function LpsiHeader() {
               {item.label}
             </a>
           ))}
-          <a
-            href={`https://wa.me/${WHATSAPP_NUMBER}`}
-            target="_blank"
-            rel="noopener noreferrer"
+          <Link
+            href="/#contact"
             className="px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg hover:shadow-xl bg-[#2D5B7C] text-white hover:bg-[#1e3d54]"
           >
             Agendar teleconsulta
-          </a>
+          </Link>
           <button
             onClick={toggleTheme}
             aria-label="Alternar modo escuro"
@@ -182,12 +201,12 @@ function LpsiHeader() {
                 {item.label}
               </a>
             ))}
-            <a
-              href={`https://wa.me/${WHATSAPP_NUMBER}`}
+            <Link
+              href="/#contact"
               className="bg-[#2D5B7C] text-white text-center py-4 rounded-xl font-bold text-lg"
             >
               Agendar teleconsulta
-            </a>
+            </Link>
           </nav>
         </div>
       </div>
@@ -213,12 +232,12 @@ function LpsiHero() {
             qualidade de vida e funcionalidade.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <a
-              href="#contato"
+            <Link
+              href="/#contact"
               className="flex items-center justify-center gap-2 bg-[#2D5B7C] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-[#1e3d54] transition-all shadow-xl hover:-translate-y-1"
             >
               Agendar teleconsulta
-            </a>
+            </Link>
             <a
               href={`https://wa.me/${WHATSAPP_NUMBER}`}
               target="_blank"
@@ -379,13 +398,13 @@ function LpsiAreas() {
               <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
                 {item.desc}
               </p>
-              <a
-                href="#contato"
+              <Link
+                href="/#contact"
                 className="inline-flex items-center text-[#2D5B7C] font-bold hover:gap-3 transition-all"
               >
                 Agendar teleconsulta{' '}
                 <ArrowRight size={18} className="ml-2" />
-              </a>
+              </Link>
             </div>
           ))}
         </div>
@@ -745,29 +764,70 @@ function LpsiFaq() {
 }
 
 function LpsiContact() {
-  const [formData, setFormData] = useState({
-    name: '',
-    phone: '',
-    email: '',
-    message: '',
-  });
-  const [status, setStatus] = useState<null | 'success'>(null);
+  const router = useRouter();
+  const { toast } = useToast();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const web3FormsKey = process.env.NEXT_PUBLIC_CONTACT_FORM_KEY ?? undefined;
+  const notificationEmail = process.env.NEXT_PUBLIC_NOTIFICATION_EMAIL ?? DEFAULT_NOTIFICATION_EMAIL;
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const lines = [
-      'Olá, gostaria de solicitar agendamento.',
-      `Nome: ${formData.name}`,
-      `Telefone: ${formData.phone}`,
-      `E-mail: ${formData.email}`,
-      formData.message ? `Mensagem: ${formData.message}` : null,
-    ].filter(Boolean);
-    const message = lines.join('\n');
-    const whatsappUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
-    window.open(whatsappUrl, '_blank');
-    setStatus('success');
-    setTimeout(() => setStatus(null), 5000);
-  };
+  const form = useForm<z.infer<typeof contactFormSchema>>({
+    resolver: zodResolver(contactFormSchema),
+    defaultValues: {
+      name: '',
+      email: '',
+      phone: '',
+      message: '',
+      consent: false,
+    },
+  });
+
+  async function onSubmit(values: z.infer<typeof contactFormSchema>) {
+    setIsSubmitting(true);
+    try {
+      const result = await submitContactForm(values);
+      if (result.success) {
+        if (web3FormsKey) {
+          try {
+            await fetch('https://api.web3forms.com/submit', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                Accept: 'application/json',
+              },
+              body: JSON.stringify({
+                access_key: web3FormsKey,
+                subject: `[Hajir] Novo lead: ${values.name}`,
+                email: values.email,
+                name: values.name,
+                message: `${values.message ?? ''}\n\nWhatsApp: ${values.phone}`,
+                to: notificationEmail,
+              }),
+            });
+          } catch (err) {
+            console.error('Erro ao enviar e-mail via Web3Forms no cliente:', err);
+          }
+        }
+        form.reset();
+        router.push('/obrigado');
+        return;
+      } else {
+        toast({
+          variant: 'destructive',
+          title: 'Não foi possível enviar',
+          description: 'Verifique sua conexão e tente novamente. Se o problema persistir, entre em contato pelo WhatsApp.',
+        });
+      }
+    } catch (err) {
+      console.error('Erro ao enviar formulário:', err);
+      toast({
+        variant: 'destructive',
+        title: 'Erro ao enviar',
+        description: 'Ocorreu um erro inesperado. Tente novamente ou entre em contato pelo WhatsApp.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <section id="contato" className="py-24 bg-[#2D5B7C] text-white">
@@ -835,81 +895,141 @@ function LpsiContact() {
             </div>
           </div>
         </div>
-        <div className="bg-white p-8 md:p-10 rounded-3xl shadow-2xl text-slate-800">
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">
-                Nome Completo
-              </label>
-              <input
-                type="text"
-                required
-                className="w-full px-5 py-4 rounded-xl border border-slate-200 focus:border-[#2D5B7C] focus:ring-2 focus:ring-[#2D5B7C]/20 transition-all outline-none"
-                placeholder="Como deseja ser chamado?"
-                value={formData.name}
-                onChange={(e) =>
-                  setFormData({ ...formData, name: e.target.value })
-                }
-              />
+        <div className="bg-white p-8 md:p-10 rounded-3xl shadow-2xl text-slate-800 relative">
+          {isSubmitting && (
+            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-3xl bg-white/95 backdrop-blur-sm text-center px-6">
+              <Loader2 className="h-14 w-14 animate-spin text-[#2D5B7C]" />
+              <p className="mt-4 text-lg font-bold text-slate-800">
+                Aguarde um instante
+              </p>
+              <p className="mt-2 text-sm text-slate-600">
+                Estamos enviando seus dados com segurança e em seguida você será redirecionado.
+              </p>
             </div>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">
-                  Telefone/WhatsApp
-                </label>
-                <input
-                  type="tel"
-                  required
-                  className="w-full px-5 py-4 rounded-xl border border-slate-200 focus:border-[#2D5B7C] focus:ring-2 focus:ring-[#2D5B7C]/20 transition-all outline-none"
-                  placeholder="(00) 00000-0000"
-                  value={formData.phone}
-                  onChange={(e) =>
-                    setFormData({ ...formData, phone: e.target.value })
-                  }
+          )}
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm font-bold text-slate-700 uppercase tracking-wide">
+                      Nome Completo
+                    </FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Como deseja ser chamado?"
+                        className="rounded-xl border-slate-200 focus:border-[#2D5B7C] focus:ring-[#2D5B7C]/20"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <div className="grid md:grid-cols-2 gap-6">
+                <FormField
+                  control={form.control}
+                  name="phone"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-bold text-slate-700 uppercase tracking-wide">
+                        Telefone/WhatsApp
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="tel"
+                          placeholder="(11) 99999-9999"
+                          className="rounded-xl border-slate-200 focus:border-[#2D5B7C] focus:ring-[#2D5B7C]/20"
+                          value={field.value}
+                          onBlur={field.onBlur}
+                          ref={field.ref}
+                          onChange={(e) => field.onChange(applyPhoneMask(e.target.value))}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-sm font-bold text-slate-700 uppercase tracking-wide">
+                        E-mail
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="exemplo@email.com"
+                          className="rounded-xl border-slate-200 focus:border-[#2D5B7C] focus:ring-[#2D5B7C]/20"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
                 />
               </div>
-              <div>
-                <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">
-                  E-mail
-                </label>
-                <input
-                  type="email"
-                  required
-                  className="w-full px-5 py-4 rounded-xl border border-slate-200 focus:border-[#2D5B7C] focus:ring-2 focus:ring-[#2D5B7C]/20 transition-all outline-none"
-                  placeholder="exemplo@email.com"
-                  value={formData.email}
-                  onChange={(e) =>
-                    setFormData({ ...formData, email: e.target.value })
-                  }
-                />
-              </div>
-            </div>
-            <div>
-              <label className="block text-sm font-bold text-slate-700 mb-2 uppercase tracking-wide">
-                Mensagem (opcional)
-              </label>
-              <textarea
-                rows={4}
-                className="w-full px-5 py-4 rounded-xl border border-slate-200 focus:border-[#2D5B7C] focus:ring-2 focus:ring-[#2D5B7C]/20 transition-all outline-none"
-                placeholder="Conte-me brevemente como posso ajudar..."
-                value={formData.message}
-                onChange={(e) =>
-                  setFormData({ ...formData, message: e.target.value })
-                }
+              <FormField
+                control={form.control}
+                name="message"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="text-sm font-bold text-slate-700 uppercase tracking-wide">
+                      Mensagem (opcional)
+                    </FormLabel>
+                    <FormControl>
+                      <Textarea
+                        rows={4}
+                        placeholder="Conte-me brevemente como posso ajudar..."
+                        className="rounded-xl border-slate-200 focus:border-[#2D5B7C] focus:ring-[#2D5B7C]/20"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
-            </div>
-            <button
-              type="submit"
-              className="w-full bg-[#2D5B7C] text-white py-5 rounded-xl font-bold text-lg hover:bg-[#1e3d54] transition-all shadow-lg"
-            >
-              Enviar Solicitação de Agendamento
-            </button>
-            {status === 'success' && (
-              <div className="bg-green-100 text-green-700 p-4 rounded-xl text-center font-bold">
-                Recebido! Entraremos em contato em breve.
-              </div>
-            )}
-          </form>
+              <FormField
+                control={form.control}
+                name="consent"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-start space-x-3 space-y-0">
+                    <FormControl>
+                      <Checkbox
+                        checked={field.value}
+                        onCheckedChange={field.onChange}
+                        className="border-slate-300 data-[state=checked]:bg-[#2D5B7C] data-[state=checked]:border-[#2D5B7C]"
+                      />
+                    </FormControl>
+                    <div className="space-y-1 leading-none">
+                      <FormLabel className="text-sm font-normal text-slate-700 cursor-pointer">
+                        Autorizo o uso dos meus dados para retorno de contato.
+                      </FormLabel>
+                      <FormMessage />
+                    </div>
+                  </FormItem>
+                )}
+              />
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-[#2D5B7C] text-white py-5 rounded-xl font-bold text-lg hover:bg-[#1e3d54] transition-all shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
+              >
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="mr-2 inline h-5 w-5 animate-spin" />
+                    Enviando...
+                  </>
+                ) : (
+                  'Enviar Solicitação de Agendamento'
+                )}
+              </button>
+            </form>
+          </Form>
         </div>
       </div>
     </section>
