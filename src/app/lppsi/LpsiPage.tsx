@@ -105,7 +105,7 @@ function LpsiHeader() {
     { label: 'Como funciona', href: '#como-funciona' },
     { label: 'Depoimentos', href: '#depoimentos' },
     { label: 'FAQs', href: '#faq' },
-    { label: 'Contato', href: '/#contact' },
+    { label: 'Contato', href: '#contato' },
   ];
 
   const headerBg =
@@ -146,7 +146,7 @@ function LpsiHeader() {
             </a>
           ))}
           <Link
-            href="/#contact"
+            href="#contato"
             className="px-6 py-2.5 rounded-full text-sm font-bold transition-all shadow-lg hover:shadow-xl bg-[#2D5B7C] text-white hover:bg-[#1e3d54]"
           >
             Agendar teleconsulta
@@ -202,7 +202,7 @@ function LpsiHeader() {
               </a>
             ))}
             <Link
-              href="/#contact"
+              href="#contato"
               className="bg-[#2D5B7C] text-white text-center py-4 rounded-xl font-bold text-lg"
             >
               Agendar teleconsulta
@@ -233,7 +233,7 @@ function LpsiHero() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
-              href="/#contact"
+              href="#contato"
               className="flex items-center justify-center gap-2 bg-[#2D5B7C] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-[#1e3d54] transition-all shadow-xl hover:-translate-y-1"
             >
               Agendar teleconsulta
@@ -399,7 +399,7 @@ function LpsiAreas() {
                 {item.desc}
               </p>
               <Link
-                href="/#contact"
+                href="#contato"
                 className="inline-flex items-center text-[#2D5B7C] font-bold hover:gap-3 transition-all"
               >
                 Agendar teleconsulta{' '}
