@@ -14,10 +14,16 @@ Para o deploy Docker funcionar corretamente (evitar 502 e formulário quebrado),
 
 ## Obrigatórios (formulário + e-mail)
 
-| Secret | Descrição |
+O envio de e-mail usa **EmailJS** no cliente (igual ao projeto phdstudio). Configure no repositório (e no servidor/container) as variáveis **públicas** para o build do Next.js:
+
+| Secret / Env | Descrição |
 |--------|-----------|
-| `CONTACT_FORM_KEY` | Chave da API Web3Forms. Quem usa **drahaabdalla@gmail.com** deve seguir **docs/MANUAL-CREDENCIAIS-EMAIL.md** para criar a chave em https://web3forms.com/#start |
-| `NOTIFICATION_EMAIL` | E-mail para receber os leads. Padrão do projeto: **drahaabdalla@gmail.com** |
+| `NEXT_PUBLIC_EMAILJS_SERVICE_ID` | ID do serviço no EmailJS (https://www.emailjs.com/) |
+| `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID` | ID do template no EmailJS |
+| `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY` | Chave pública do EmailJS |
+| `NEXT_PUBLIC_NOTIFICATION_EMAIL` | E-mail que recebe os leads (ex.: drahaabdalla@gmail.com) |
+
+Ver **docs/EMAIL-EMAILJS.md** para detalhes do template e configuração.
 
 ## Opcionais (ajustar se necessário)
 
@@ -33,7 +39,7 @@ Para o deploy Docker funcionar corretamente (evitar 502 e formulário quebrado),
 
 ## Como verificar se o CRM está recebendo leads
 
-- **Logs do container (Docker):** `docker logs -f --tail=100 lphajir-web | egrep "CRM|Resend|E-mail de lead|Erro"`
+- **Logs do container (Docker):** `docker logs -f --tail=100 lphajir-web | egrep "CRM|Erro"`
   - Se aparecer `CRM login failed` ou `CRM create lead failed`, as credenciais ou a API do CRM estão com problema.
   - Se não aparecer nenhum erro de CRM ao enviar o formulário e o lead não surgir no painel do CRM, confira se `ENABLE_CRM` está `true` no ambiente.
 - **Deploy Docker:** crie o secret `ENABLE_CRM` com valor `true` em Settings → Secrets → Actions para ativar o envio ao CRM.

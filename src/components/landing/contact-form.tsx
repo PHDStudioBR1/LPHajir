@@ -23,19 +23,24 @@ import { useToast } from "@/hooks/use-toast"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { submitContactForm } from "@/lib/actions"
 import { contactFormSchema } from "@/lib/schemas"
+import { sendLeadEmail, initEmailJS } from "@/lib/emailjs-client"
 import { DEFAULT_NOTIFICATION_EMAIL } from "@/lib/email-config"
 import { applyPhoneMask } from "@/lib/phone-utils"
+import { useEffect } from "react"
 
 type ContactFormProps = {
-  web3FormsKey?: string
-  /** E-mail que recebe os leads (padrão: drahaabdalla@gmail.com) */
+  /** E-mail que recebe os leads (padrão: drahaabdalla@gmail.com); usado como destinatário no EmailJS */
   notificationEmail?: string
 }
 
-export default function ContactForm({ web3FormsKey, notificationEmail = DEFAULT_NOTIFICATION_EMAIL }: ContactFormProps) {
+export default function ContactForm({ notificationEmail = DEFAULT_NOTIFICATION_EMAIL }: ContactFormProps) {
   const router = useRouter();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    initEmailJS()
+  }, [])
 
   const form = useForm<z.infer<typeof contactFormSchema>>({
     resolver: zodResolver(contactFormSchema),
@@ -49,53 +54,45 @@ export default function ContactForm({ web3FormsKey, notificationEmail = DEFAULT_
   })
 
   async function onSubmit(values: z.infer<typeof contactFormSchema>) {
-    setIsSubmitting(true);
+    setIsSubmitting(true)
     try {
-      const result = await submitContactForm(values);
-      if (result.success) {
-        // Dispara envio de e-mail via Web3Forms no cliente (não bloqueia o CRM)
-        if (web3FormsKey) {
-          try {
-            await fetch("https://api.web3forms.com/submit", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                Accept: "application/json",
-              },
-              body: JSON.stringify({
-                access_key: web3FormsKey,
-                subject: `[Hajir] Novo lead: ${values.name}`,
-                email: values.email,
-                name: values.name,
-                message: `${values.message ?? ""}\n\nWhatsApp: ${values.phone}`,
-                to: notificationEmail,
-              }),
-            });
-          } catch (err) {
-            console.error("Erro ao enviar e-mail via Web3Forms no cliente:", err);
-          }
-        } else {
-          console.warn("Web3Forms desabilitado: web3FormsKey não informado ao componente.");
-        }
-        form.reset();
-        router.push("/obrigado");
-        return;
-      } else {
+      // 1) Enviar e-mail via EmailJS (como no phdstudio)
+      const emailResult = await sendLeadEmail({
+        from_name: values.name,
+        from_email: values.email,
+        phone: values.phone,
+        message: values.message ?? "Sem mensagem adicional",
+        to_email: notificationEmail,
+      })
+      if (!emailResult.success) {
         toast({
           variant: "destructive",
-          title: "Não foi possível enviar",
-          description: "Verifique sua conexão e tente novamente. Se o problema persistir, entre em contato pelo WhatsApp.",
-        });
+          title: "Erro ao enviar",
+          description: emailResult.error || "Não foi possível enviar. Tente novamente ou entre em contato pelo WhatsApp.",
+        })
+        return
       }
+      // 2) Enviar lead ao CRM (server action)
+      const result = await submitContactForm(values)
+      if (result.success) {
+        form.reset()
+        router.push("/obrigado")
+        return
+      }
+      toast({
+        variant: "destructive",
+        title: "Não foi possível enviar",
+        description: "Verifique sua conexão e tente novamente. Se o problema persistir, entre em contato pelo WhatsApp.",
+      })
     } catch (err) {
-      console.error("Erro ao enviar formulário:", err);
+      console.error("Erro ao enviar formulário:", err)
       toast({
         variant: "destructive",
         title: "Erro ao enviar",
         description: "Ocorreu um erro inesperado. Tente novamente ou entre em contato pelo WhatsApp.",
-      });
+      })
     } finally {
-      setIsSubmitting(false);
+      setIsSubmitting(false)
     }
   }
 

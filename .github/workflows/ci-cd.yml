@@ -66,6 +66,11 @@ jobs:
           context: .
           file: ./Dockerfile
           push: true
+          build-args: |
+            NEXT_PUBLIC_EMAILJS_SERVICE_ID=${{ secrets.NEXT_PUBLIC_EMAILJS_SERVICE_ID }}
+            NEXT_PUBLIC_EMAILJS_TEMPLATE_ID=${{ secrets.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID }}
+            NEXT_PUBLIC_EMAILJS_PUBLIC_KEY=${{ secrets.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY }}
+            NEXT_PUBLIC_NOTIFICATION_EMAIL=${{ secrets.NEXT_PUBLIC_NOTIFICATION_EMAIL }}
           tags: |
             ${{ env.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:latest
             ${{ env.DOCKER_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
@@ -148,8 +153,6 @@ jobs:
       - name: Executar Deploy via SSH
         uses: appleboy/ssh-action@v1.0.3
         env:
-          CONTACT_FORM_KEY: ${{ secrets.CONTACT_FORM_KEY }}
-          NOTIFICATION_EMAIL: ${{ secrets.NOTIFICATION_EMAIL }}
           CRM_BASE_URL: ${{ secrets.CRM_BASE_URL }}
           CRM_TENANT_SLUG: ${{ secrets.CRM_TENANT_SLUG }}
           CRM_USER_ID: ${{ secrets.CRM_USER_ID }}
@@ -162,7 +165,7 @@ jobs:
           username: ${{ secrets.DOCKER_SERVER_USER }}
           key: ${{ secrets.DOCKER_SERVER_SSH_KEY }}
           password: ${{ secrets.DOCKER_SERVER_PASSWORD }}
-          envs: CONTACT_FORM_KEY,NOTIFICATION_EMAIL,CRM_BASE_URL,CRM_TENANT_SLUG,CRM_USER_ID,CRM_ADMIN_EMAIL,CRM_ADMIN_PASSWORD,ENABLE_CRM,DOCKER_NETWORK
+          envs: CRM_BASE_URL,CRM_TENANT_SLUG,CRM_USER_ID,CRM_ADMIN_EMAIL,CRM_ADMIN_PASSWORD,ENABLE_CRM,DOCKER_NETWORK
           script: |
             set -e
             echo "=== Disk space (before cleanup) ==="
@@ -191,8 +194,6 @@ jobs:
               --restart always \
               -p 3000:3000 \
               --network "$NETWORK" \
-              -e "CONTACT_FORM_KEY=${CONTACT_FORM_KEY}" \
-              -e "NOTIFICATION_EMAIL=${NOTIFICATION_EMAIL}" \
               -e "CRM_BASE_URL=${CRM_BASE_URL}" \
               -e "CRM_TENANT_SLUG=${CRM_TENANT_SLUG}" \
               -e "CRM_USER_ID=${CRM_USER_ID}" \

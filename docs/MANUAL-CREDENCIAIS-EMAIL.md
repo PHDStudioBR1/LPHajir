@@ -1,63 +1,67 @@
-# Manual: Criar credenciais de e-mail para o site (drahaabdalla@gmail.com)
+# Manual: Credenciais de e-mail para o site (EmailJS – igual ao phdstudio)
 
-Este manual é para **quem usa o e-mail drahaabdalla@gmail.com** e precisa criar as credenciais para o formulário de contato do site enviar as mensagens para essa caixa de entrada.
+Este manual é para **quem usa o e-mail drahaabdalla@gmail.com** (ou outro) e precisa configurar o envio de e-mails do formulário de contato.
 
-O site usa o serviço **Web3Forms** para enviar os e-mails. É gratuito e os dados chegam direto no Gmail que você configurar.
+O site usa **EmailJS** no navegador (cliente), no mesmo padrão do projeto phdstudio. Os e-mails são enviados diretamente pelo navegador para o EmailJS, que encaminha para o Gmail configurado.
 
 ---
 
 ## O que você vai fazer
 
-1. Criar uma **Access Key** (chave de acesso) no Web3Forms usando o e-mail **drahaabdalla@gmail.com**.
-2. Enviar essa chave para quem configura o site (ou colocá-la no painel do servidor, conforme orientação).
+1. Criar uma conta no **EmailJS** (https://www.emailjs.com/).
+2. Configurar um **serviço de e-mail** (ex.: Gmail) e um **template** com as variáveis do projeto.
+3. Anotar **Service ID**, **Template ID** e **Public Key** e repassar para quem configura o site (ou colocá-los no painel do servidor / GitHub Secrets).
 
 ---
 
 ## Passo a passo
 
-### 1. Acessar o site do Web3Forms
+### 1. Acessar o EmailJS
 
-Abra no navegador:
+Abra: **https://www.emailjs.com/** e crie uma conta (ou faça login).
 
-**https://web3forms.com/#start**
+### 2. Criar um serviço de e-mail
 
-(ou https://web3forms.com e clique em “Get started” / “Começar”.)
+- No painel: **Email Services** → **Add New Service**.
+- Escolha o provedor (ex.: **Gmail**).
+- Conecte a conta Gmail que receberá os contatos (ex.: drahaabdalla@gmail.com).
+- Anote o **Service ID** (ex.: `service_xxxxx`).
 
-### 2. Preencher o formulário para receber a chave
+### 3. Criar um template
 
-Na página inicial do Web3Forms você verá um formulário. Preencha:
+- **Email Templates** → **Create New Template**.
+- **Subject:** por exemplo: `Novo Lead - {{from_name}}`
+- **Content (corpo)** use exatamente estas variáveis:
+  - Nome: `{{from_name}}`
+  - E-mail: `{{from_email}}`
+  - WhatsApp: `{{phone}}`
+  - Mensagem: `{{message}}`
+  - Responder para: `{{reply_to}}`
+  - Para (destinatário): `{{email}}` — o código envia aqui o e-mail que recebe os leads.
+- Salve e anote o **Template ID** (ex.: `template_xxxxx`).
 
-- **Your Email:**  
-  `drahaabdalla@gmail.com`  
-  (o mesmo e-mail onde você quer receber os contatos do site.)
+### 4. Obter a Public Key
 
-- **Subject (opcional):**  
-  Pode deixar em branco ou escrever algo como: `Contato do site Hajir`.
+- **Account** → **API Keys** (ou **General**).
+- Copie a **Public Key**.
 
-Depois clique em **Submit** (ou “Enviar”).
+### 5. Enviar as chaves para quem configura o site
 
-### 3. Receber a Access Key no e-mail
+Envie:
 
-- Em alguns minutos você receberá um e-mail do Web3Forms no endereço **drahaabdalla@gmail.com**.
-- **Verifique também** a pasta **Promoções** e **Atualizações** (e Spam, se não achar).
-- O e-mail contém uma **Access Key**: uma chave longa, parecida com:
-  - `a1b2c3d4-e5f6-7890-abcd-ef1234567890`
+- **Service ID** (ex.: `service_xxxxx`)
+- **Template ID** (ex.: `template_xxxxx`)
+- **Public Key**
+- **E-mail destinatário** (ex.: drahaabdalla@gmail.com) — usado em `NEXT_PUBLIC_NOTIFICATION_EMAIL`
 
-**Não compartilhe essa chave em redes sociais nem em lugares públicos.** Só envie para quem for configurar o site (por canal seguro, ex.: WhatsApp ou e-mail privado).
+Quem configura o site vai colocar isso nas variáveis (ou Secrets):
 
-### 4. Enviar a chave para quem configura o site
+- `NEXT_PUBLIC_EMAILJS_SERVICE_ID`
+- `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID`
+- `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY`
+- `NEXT_PUBLIC_NOTIFICATION_EMAIL`
 
-Envie para o responsável pela configuração do site:
-
-- A frase: **“Aqui está a Access Key do Web3Forms para o formulário de contato.”**
-- A **Access Key** completa (copie e cole do e-mail, sem espaços no início ou no fim).
-
-Exemplo de mensagem:
-
-> Aqui está a Access Key do Web3Forms para o formulário de contato:  
-> `a1b2c3d4-e5f6-7890-abcd-ef1234567890`
-
-Quem configura o site vai colocar essa chave na variável **`CONTACT_FORM_KEY`** (e, se usar ambiente local, também em **`NEXT_PUBLIC_CONTACT_FORM_KEY`**). Detalhes em **DEPLOY-SECRETS.md** e **.env.example**.
+Detalhes em **DEPLOY-SECRETS.md** e **docs/EMAIL-EMAILJS.md**.
 
 ---
 
@@ -65,22 +69,19 @@ Quem configura o site vai colocar essa chave na variável **`CONTACT_FORM_KEY`**
 
 | O que | Onde / como |
 |-------|------------------|
-| E-mail que recebe os contatos | **drahaabdalla@gmail.com** (já é o padrão do site) |
-| Serviço de envio | Web3Forms (https://web3forms.com) |
-| O que você precisa criar | Uma **Access Key** no Web3Forms usando drahaabdalla@gmail.com |
-| O que fazer com a chave | Enviar para quem configura o site (ou colocá-la no servidor conforme orientação) |
+| E-mail que recebe os contatos | **drahaabdalla@gmail.com** (ou o que for definido em `NEXT_PUBLIC_NOTIFICATION_EMAIL`) |
+| Serviço de envio | EmailJS (https://www.emailjs.com/) |
+| O que configurar | Conta EmailJS, serviço (ex. Gmail), template com variáveis do projeto |
+| Variáveis do template | `from_name`, `from_email`, `phone`, `message`, `reply_to`, `email` |
 
-Depois que a chave for configurada no servidor, todo envio do formulário de contato do site será recebido em **drahaabdalla@gmail.com**.
+Depois de configuradas no ambiente (build/deploy), todo envio do formulário de contato será recebido no e-mail configurado.
 
 ---
 
 ## Problemas comuns
 
-- **Não recebi o e-mail do Web3Forms**  
-  Espere alguns minutos e confira Promoções, Atualizações e Spam. Use exatamente **drahaabdalla@gmail.com** no formulário do Web3Forms.
+- **E-mail não chega**  
+  Confira no painel do EmailJS se o envio foi aceito e se o template está ativo. Verifique também Spam e Promoções.
 
 - **Quero usar outro e-mail no futuro**  
-  Você pode criar uma nova Access Key no Web3Forms com o outro e-mail e enviar a nova chave para quem configura o site. O destino dos e-mails também pode ser alterado pela variável `NOTIFICATION_EMAIL` (ver DEPLOY-SECRETS.md).
-
-- **Onde ver a chave de novo?**  
-  No e-mail que o Web3Forms enviou para drahaabdalla@gmail.com. Se perdeu, crie uma nova chave em https://web3forms.com/#start com o mesmo e-mail.
+  Altere o serviço no EmailJS ou apenas a variável `NEXT_PUBLIC_NOTIFICATION_EMAIL` (ver DEPLOY-SECRETS.md e EMAIL-EMAILJS.md).

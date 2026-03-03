@@ -45,6 +45,7 @@ import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
 import { submitContactForm } from '@/lib/actions';
 import { contactFormSchema } from '@/lib/schemas';
+import { sendLeadEmail, initEmailJS } from '@/lib/emailjs-client';
 import { DEFAULT_NOTIFICATION_EMAIL } from '@/lib/email-config';
 import { applyPhoneMask } from '@/lib/phone-utils';
 
@@ -767,8 +768,11 @@ function LpsiContact() {
   const router = useRouter();
   const { toast } = useToast();
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const web3FormsKey = process.env.NEXT_PUBLIC_CONTACT_FORM_KEY ?? undefined;
   const notificationEmail = process.env.NEXT_PUBLIC_NOTIFICATION_EMAIL ?? DEFAULT_NOTIFICATION_EMAIL;
+
+  useEffect(() => {
+    initEmailJS();
+  }, []);
 
   const form = useForm<z.infer<typeof contactFormSchema>>({
     resolver: zodResolver(contactFormSchema),
@@ -784,39 +788,32 @@ function LpsiContact() {
   async function onSubmit(values: z.infer<typeof contactFormSchema>) {
     setIsSubmitting(true);
     try {
+      const emailResult = await sendLeadEmail({
+        from_name: values.name,
+        from_email: values.email,
+        phone: values.phone,
+        message: values.message ?? 'Sem mensagem adicional',
+        to_email: notificationEmail,
+      });
+      if (!emailResult.success) {
+        toast({
+          variant: 'destructive',
+          title: 'Erro ao enviar',
+          description: emailResult.error || 'Não foi possível enviar. Tente novamente ou entre em contato pelo WhatsApp.',
+        });
+        return;
+      }
       const result = await submitContactForm(values);
       if (result.success) {
-        if (web3FormsKey) {
-          try {
-            await fetch('https://api.web3forms.com/submit', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                Accept: 'application/json',
-              },
-              body: JSON.stringify({
-                access_key: web3FormsKey,
-                subject: `[Hajir] Novo lead: ${values.name}`,
-                email: values.email,
-                name: values.name,
-                message: `${values.message ?? ''}\n\nWhatsApp: ${values.phone}`,
-                to: notificationEmail,
-              }),
-            });
-          } catch (err) {
-            console.error('Erro ao enviar e-mail via Web3Forms no cliente:', err);
-          }
-        }
         form.reset();
         router.push('/obrigado');
         return;
-      } else {
-        toast({
-          variant: 'destructive',
-          title: 'Não foi possível enviar',
-          description: 'Verifique sua conexão e tente novamente. Se o problema persistir, entre em contato pelo WhatsApp.',
-        });
       }
+      toast({
+        variant: 'destructive',
+        title: 'Não foi possível enviar',
+        description: 'Verifique sua conexão e tente novamente. Se o problema persistir, entre em contato pelo WhatsApp.',
+      });
     } catch (err) {
       console.error('Erro ao enviar formulário:', err);
       toast({

@@ -1,6 +1,8 @@
 # Análise de e-mail (Resend) – Produção
 
-Este documento ajuda a diagnosticar o envio de e-mails de lead pelo Resend e a deixar a configuração estável em produção.
+**Nota:** O projeto migrou o envio de e-mail para **EmailJS** no cliente (igual ao phdstudio). Para configuração atual, ver **docs/EMAIL-EMAILJS.md** e **docs/MANUAL-CREDENCIAIS-EMAIL.md**.
+
+O texto abaixo descreve o fluxo antigo (Resend) e pode ser mantido como referência histórica.
 
 ---
 

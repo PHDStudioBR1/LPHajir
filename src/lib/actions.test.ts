@@ -1,10 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest"
 import { submitContactForm } from "./actions"
 
-vi.mock("./email", () => ({
-    sendLeadNotification: vi.fn().mockResolvedValue({ success: true }),
-}))
-
 describe("submitContactForm", () => {
     const CRM_BASE = "https://phdcrm.546digitalservices.com"
     const CRM_API = `${CRM_BASE}/api/crm/v1`
@@ -40,7 +36,7 @@ describe("submitContactForm", () => {
             }),
         )
         process.env.CRM_BASE_URL = CRM_BASE
-        process.env.NOTIFICATION_EMAIL = "notify@test.com"
+        process.env.ENABLE_CRM = "true"
         process.env.CRM_ADMIN_EMAIL = "admin@test"
         process.env.CRM_ADMIN_PASSWORD = "secret"
         process.env.CRM_TENANT_SLUG = "hajir"
@@ -52,7 +48,7 @@ describe("submitContactForm", () => {
         expect(result).toEqual({ success: true, name: "João Silva" })
     })
 
-    it("chama login, cria lead, cria atividade e envia e-mail", async () => {
+    it("chama login, cria lead e cria atividade (e-mail é enviado no cliente via EmailJS)", async () => {
         const fetchMock = vi.mocked(fetch)
         await submitContactForm(formData)
 

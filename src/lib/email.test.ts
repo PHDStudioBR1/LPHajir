@@ -1,69 +1,59 @@
 import { describe, it, expect, vi, beforeEach } from "vitest"
 
-describe("sendLeadNotification", () => {
-    const originalEnv = process.env
-    const mockFetch = vi.fn()
+vi.mock("@emailjs/browser", () => ({
+  default: {
+    init: vi.fn(),
+    send: vi.fn(),
+  },
+}))
 
-    beforeEach(() => {
-        mockFetch.mockReset()
-        ;(globalThis as any).fetch = mockFetch
-        process.env = { ...originalEnv }
-    })
+describe("sendLeadEmail (EmailJS)", () => {
+  const originalEnv = process.env
 
-    it("retorna erro quando CONTACT_FORM_KEY não está configurado", async () => {
-        delete process.env.CONTACT_FORM_KEY
-        const { sendLeadNotification } = await import("./email")
-        const result = await sendLeadNotification("test@example.com", {
-            name: "João",
-            email: "joao@test.com",
-            message: "Olá!",
-        })
-        expect(result.success).toBe(false)
-        expect(result.error).toContain("CONTACT_FORM_KEY")
-        expect(mockFetch).not.toHaveBeenCalled()
-    })
+  beforeEach(() => {
+    vi.clearAllMocks()
+    process.env = { ...originalEnv }
+  })
 
-    it("envia e-mail quando CONTACT_FORM_KEY está configurado", async () => {
-        process.env.CONTACT_FORM_KEY = "test_access_key"
-        mockFetch.mockResolvedValue({
-            ok: true,
-            status: 200,
-            json: async () => ({ success: true }),
-            text: async () => "",
-        })
-        const { sendLeadNotification } = await import("./email")
-        const result = await sendLeadNotification("destino@example.com", {
-            name: "Maria",
-            email: "maria@test.com",
-            message: "Quero mais informações.",
-        })
-        expect(result.success).toBe(true)
-        expect(mockFetch).toHaveBeenCalledWith(
-            "https://api.web3forms.com/submit",
-            expect.objectContaining({
-                method: "POST",
-            }),
-        )
+  it("retorna erro quando NEXT_PUBLIC_EMAILJS_SERVICE_ID não está configurado", async () => {
+    delete process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID
+    delete process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID
+    delete process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY
+    const { sendLeadEmail } = await import("./emailjs-client")
+    const result = await sendLeadEmail({
+      from_name: "João",
+      from_email: "joao@test.com",
+      phone: "11999999999",
+      message: "Olá!",
     })
+    expect(result.success).toBe(false)
+    expect(result.error).toContain("NEXT_PUBLIC_EMAILJS")
+  })
 
-    it("escapa caracteres HTML nos dados do lead", async () => {
-        process.env.CONTACT_FORM_KEY = "test_access_key"
-        mockFetch.mockResolvedValue({
-            ok: true,
-            status: 200,
-            json: async () => ({ success: true }),
-            text: async () => "",
-        })
-        const { sendLeadNotification } = await import("./email")
-        await sendLeadNotification("a@b.com", {
-            name: "<script>alert(1)</script>",
-            email: "x@y.com",
-            message: "Teste & <html>",
-        })
-        const call = mockFetch.mock.calls[0][1]
-        const body = JSON.parse(call.body as string)
-        expect(body.html).not.toContain("<script>")
-        expect(body.html).toContain("&lt;script&gt;")
-        expect(body.html).toContain("&amp;")
+  it("retorna sucesso quando config está preenchida e emailjs.send resolve", async () => {
+    process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID = "service_test"
+    process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID = "template_test"
+    process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY = "key_test"
+    const emailjs = await import("@emailjs/browser")
+    vi.mocked(emailjs.default.send).mockResolvedValue(undefined as never)
+    const { sendLeadEmail } = await import("./emailjs-client")
+    const result = await sendLeadEmail({
+      from_name: "Maria",
+      from_email: "maria@test.com",
+      phone: "11988887777",
+      message: "Quero mais informações.",
     })
+    expect(result.success).toBe(true)
+    expect(emailjs.default.send).toHaveBeenCalledWith(
+      "service_test",
+      "template_test",
+      expect.objectContaining({
+        from_name: "Maria",
+        from_email: "maria@test.com",
+        phone: "11988887777",
+        message: "Quero mais informações.",
+        reply_to: "maria@test.com",
+      }),
+    )
+  })
 })

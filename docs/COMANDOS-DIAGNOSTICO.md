@@ -40,7 +40,7 @@ docker network inspect drahajirabdalla_drahajirabdalla-network
 ## 5. Variáveis de Ambiente do Container
 
 ```bash
-docker exec lphajir-web env | grep -E "CRM|CONTACT_FORM_KEY|NOTIFICATION|ENABLE_CRM"
+docker exec lphajir-web env | grep -E "CRM|ENABLE_CRM"
 ```
 
 ---
@@ -104,7 +104,7 @@ Use após enviar um lead pelo site, para ver se o e-mail foi enviado e se houve 
 docker logs -f --tail=100 lphajir-web 2>&1 | egrep "Web3Forms|E-mail de lead|Erro CRM|CRM login|CRM create lead|CRM create activity"
 ```
 
-Para análise completa, cole a saída junto com o status do último envio no painel Web3Forms e o valor de `CONTACT_FORM_KEY`. Ver `docs/DEPLOY-SECRETS.md`.
+Para análise completa, cole a saída. E-mail é enviado via EmailJS no cliente; ver `docs/EMAIL-EMAILJS.md` e `docs/DEPLOY-SECRETS.md`.
 
 ---
 

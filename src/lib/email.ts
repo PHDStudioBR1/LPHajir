@@ -1,3 +1,7 @@
+/**
+ * @deprecated Envio de e-mail migrado para EmailJS no cliente (src/lib/emailjs-client.ts).
+ * Este módulo não é mais usado; mantido apenas por compatibilidade.
+ */
 export type LeadNotificationData = {
     name: string
     email: string

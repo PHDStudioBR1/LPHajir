@@ -4,7 +4,7 @@ metadata:
   name: lphajir-contact-config
   namespace: lphajir
 data:
-  NOTIFICATION_EMAIL: "drahaabdalla@gmail.com"
+  # NOTIFICATION_EMAIL e EmailJS: configurados no build (NEXT_PUBLIC_*). Ver docs/EMAIL-EMAILJS.md
   CRM_BASE_URL: "https://phdcrm.546digitalservices.com"
   CRM_TENANT_SLUG: "hajir"
   CRM_USER_ID: "1"

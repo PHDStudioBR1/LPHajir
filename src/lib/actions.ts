@@ -2,11 +2,9 @@
 
 import * as z from "zod"
 import { contactFormSchema } from "./schemas"
-import { sendLeadNotification } from "./email"
-import { DEFAULT_NOTIFICATION_EMAIL } from "./email-config"
 import { formatPhoneForApi } from "./phone-utils"
 
-const FETCH_TIMEOUT_MS = 20000 // 20s por requisição - evita travar se CRM/e-mail lentos
+const FETCH_TIMEOUT_MS = 20000 // 20s por requisição - evita travar se CRM lento
 
 async function fetchWithTimeout(
     url: string,
@@ -20,30 +18,20 @@ async function fetchWithTimeout(
     return res
 }
 
+/**
+ * Submete o lead ao CRM. O e-mail é enviado no cliente via EmailJS (como no phdstudio).
+ */
 export async function submitContactForm(data: z.infer<typeof contactFormSchema>) {
     const CRM_BASE = process.env.CRM_BASE_URL || "https://phdcrm.546digitalservices.com"
     const CRM_API = `${CRM_BASE.replace(/\/$/, "")}/api/crm/v1`
-    const TARGET_EMAIL = process.env.NOTIFICATION_EMAIL || DEFAULT_NOTIFICATION_EMAIL
     const ENABLE_CRM = process.env.ENABLE_CRM === "true"
 
-    // 1) E-mail primeiro (mais rápido, garante que não perdemos o lead)
-    const emailResult = await sendLeadNotification(TARGET_EMAIL, {
-        name: data.name,
-        email: data.email,
-        message: `${data.message ?? ""}\n\nWhatsApp: ${data.phone}`,
-    })
-
     if (!ENABLE_CRM) {
-        if (!emailResult.success) {
-            console.error(
-                "Falha ao enviar e-mail de lead via Web3Forms. Verifique CONTACT_FORM_KEY/NOTIFICATION_EMAIL/Web3Forms. Prosseguindo para não travar o formulário.",
-            )
-        }
         return { success: true, name: data.name }
     }
 
     try {
-        // 2) Login no CRM
+        // Login no CRM
         const loginRes = await fetchWithTimeout(`${CRM_API}/auth/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -123,10 +111,6 @@ export async function submitContactForm(data: z.infer<typeof contactFormSchema>)
         return { success: true, name: data.name }
     } catch (error) {
         console.error("Erro CRM:", error)
-        // E-mail já foi enviado no início - retorna sucesso se enviou
-        if (emailResult.success) {
-            return { success: true, name: data.name }
-        }
         return { success: false }
     }
 }
