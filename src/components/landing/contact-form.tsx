@@ -65,6 +65,7 @@ export default function ContactForm({ notificationEmail = DEFAULT_NOTIFICATION_E
         to_email: notificationEmail,
       })
       if (!emailResult.success) {
+        console.error("[ContactForm] Falha EmailJS:", emailResult.error)
         toast({
           variant: "destructive",
           title: "Erro ao enviar",
@@ -72,24 +73,23 @@ export default function ContactForm({ notificationEmail = DEFAULT_NOTIFICATION_E
         })
         return
       }
-      // 2) Enviar lead ao CRM (server action)
+      // 2) Enviar lead ao CRM (server action) — se falhar, o e-mail já foi enviado
       const result = await submitContactForm(values)
       if (result.success) {
         form.reset()
         router.push("/obrigado")
         return
       }
-      toast({
-        variant: "destructive",
-        title: "Não foi possível enviar",
-        description: "Verifique sua conexão e tente novamente. Se o problema persistir, entre em contato pelo WhatsApp.",
-      })
+      // E-mail foi enviado; CRM falhou — não bloqueia o usuário
+      console.warn("[ContactForm] E-mail enviado, mas CRM falhou. Lead já recebido por e-mail.")
+      form.reset()
+      router.push("/obrigado")
     } catch (err) {
       console.error("Erro ao enviar formulário:", err)
       toast({
         variant: "destructive",
         title: "Erro ao enviar",
-        description: "Ocorreu um erro inesperado. Tente novamente ou entre em contato pelo WhatsApp.",
+        description: err instanceof Error ? err.message : "Ocorreu um erro inesperado. Tente novamente ou entre em contato pelo WhatsApp.",
       })
     } finally {
       setIsSubmitting(false)

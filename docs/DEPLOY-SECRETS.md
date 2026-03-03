@@ -14,15 +14,16 @@ Para o deploy Docker funcionar corretamente (evitar 502 e formulário quebrado),
 
 ## Obrigatórios (formulário + e-mail)
 
-O envio de e-mail usa **EmailJS** no cliente (igual ao projeto phdstudio). Configure no repositório (e no servidor/container) as variáveis **públicas** para o build do Next.js:
+O envio de e-mail usa **EmailJS** no cliente (igual ao projeto phdstudio). As variáveis abaixo são **incluídas no build** da imagem (não aparecem em `docker exec ... env`). Elas precisam estar nos **Secrets do GitHub** para o job de **Build** do workflow:
 
-| Secret / Env | Descrição |
+| Secret (nome exato no GitHub) | Descrição |
 |--------|-----------|
-| `NEXT_PUBLIC_EMAILJS_SERVICE_ID` | ID do serviço no EmailJS (https://www.emailjs.com/) |
-| `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID` | ID do template no EmailJS |
+| `NEXT_PUBLIC_EMAILJS_SERVICE_ID` | ID do serviço no EmailJS (ex.: `service_xxxxx`) |
+| `NEXT_PUBLIC_EMAILJS_TEMPLATE_ID` | ID do template no EmailJS (ex.: `template_xxxxx`) |
 | `NEXT_PUBLIC_EMAILJS_PUBLIC_KEY` | Chave pública do EmailJS |
-| `NEXT_PUBLIC_NOTIFICATION_EMAIL` | E-mail que recebe os leads (ex.: drahaabdalla@gmail.com) |
+| `NEXT_PUBLIC_NOTIFICATION_EMAIL` | E-mail que recebe os leads (ex.: phdstudiobr@gmail.com) |
 
+**Importante:** Depois de criar/alterar esses secrets, é necessário **rodar o workflow de novo** (push na `main` ou "Run workflow") para **reconstruir a imagem**. Só fazer pull e restart do container não basta — as variáveis são gravadas no JavaScript no momento do build.
 Ver **docs/EMAIL-EMAILJS.md** para detalhes do template e configuração.
 
 ## Opcionais (ajustar se necessário)

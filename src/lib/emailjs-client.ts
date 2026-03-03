@@ -94,6 +94,9 @@ export async function sendLeadEmail(params: SendLeadEmailParams): Promise<{
     } else if (e?.message) {
       message = e.message
     }
+    if (typeof console !== "undefined" && console.error) {
+      console.error("[EmailJS] Erro no envio:", e ?? err)
+    }
     return { success: false, error: message }
   }
 }

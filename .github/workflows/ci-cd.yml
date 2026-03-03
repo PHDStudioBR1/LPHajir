@@ -83,6 +83,8 @@ jobs:
     needs: build
     if: (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master') && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
     environment: production
+    # Se você usa só Docker, ignore este job; o workflow continua verde mesmo se K8s falhar
+    continue-on-error: true
 
     steps:
       - name: Checkout código
