@@ -1,8 +1,12 @@
 import type { Metadata } from 'next';
-import Script from 'next/script';
+import { GoogleTagManager } from '@next/third-parties/google';
 import { Alegreya, PT_Sans } from 'next/font/google';
 import { Toaster } from "@/components/ui/toaster"
+import { UtmTracker } from '@/components/analytics/utm-tracker';
 import './globals.css';
+
+/** ID do container GTM da clínica (Google Tag Manager). */
+const GTM_ID = 'GTM-MW74TJC9';
 
 const alegreya = Alegreya({
   subsets: ['latin'],
@@ -33,36 +37,25 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className={`!scroll-smooth ${alegreya.variable} ${ptSans.variable}`}>
+      <GoogleTagManager gtmId={GTM_ID} />
       <head>
         <link rel="icon" type="image/png" href="/favicon.png?v=1" />
         <link rel="shortcut icon" href="/favicon.png?v=1" type="image/png" />
       </head>
       <body className="font-body antialiased min-h-screen">
-        {/* Google Tag Manager (noscript) */}
+        {/* Fallback GTM quando JavaScript está desabilitado */}
         <noscript>
           <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-MW74TJC9"
+            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
             height="0"
             width="0"
             style={{ display: 'none', visibility: 'hidden' }}
             title="Google Tag Manager"
           />
         </noscript>
-        {/* End Google Tag Manager (noscript) */}
         {children}
         <Toaster />
-        {/* Google Tag Manager */}
-        <Script
-          id="gtm"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-MW74TJC9');`,
-          }}
-        />
+        <UtmTracker />
       </body>
     </html>
   );

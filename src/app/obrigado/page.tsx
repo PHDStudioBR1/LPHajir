@@ -4,19 +4,22 @@ import { useEffect } from "react"
 import Link from "next/link"
 import { CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { getUtmFromStorage } from "@/lib/gtm"
 
 const WHATSAPP_URL = "https://wa.me/5511977920368"
 const REDIRECT_DELAY_MS = 2000
 
-/** Evento enviado ao GTM para disparar conversão/lead na página de obrigado (SPA). */
+/** Evento de visualização da página de obrigado (conversão já disparada no submit do formulário como generate_lead). */
 const GTM_OBRIGADO_EVENT = "page_view_obrigado"
 
 export default function ObrigadoPage() {
   useEffect(() => {
-    // Dispara evento para o GTM (tags de conversão Google Ads + GA4 generate_lead)
-    if (typeof window !== "undefined" && window.dataLayer) {
-      window.dataLayer.push({ event: GTM_OBRIGADO_EVENT })
-    }
+    if (typeof window === "undefined" || !window.dataLayer) return
+    const utm = getUtmFromStorage()
+    window.dataLayer.push({
+      event: GTM_OBRIGADO_EVENT,
+      ...utm,
+    })
 
     const t = setTimeout(() => {
       window.location.href = WHATSAPP_URL

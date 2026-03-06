@@ -26,6 +26,7 @@ import { contactFormSchema } from "@/lib/schemas"
 import { sendLeadEmail, initEmailJS } from "@/lib/emailjs-client"
 import { DEFAULT_NOTIFICATION_EMAIL } from "@/lib/email-config"
 import { applyPhoneMask } from "@/lib/phone-utils"
+import { pushGenerateLead } from "@/lib/gtm"
 import { useEffect } from "react"
 
 type ContactFormProps = {
@@ -76,12 +77,14 @@ export default function ContactForm({ notificationEmail = DEFAULT_NOTIFICATION_E
       // 2) Enviar lead ao CRM (server action) — se falhar, o e-mail já foi enviado
       const result = await submitContactForm(values)
       if (result.success) {
+        pushGenerateLead()
         form.reset()
         router.push("/obrigado")
         return
       }
       // E-mail foi enviado; CRM falhou — não bloqueia o usuário
       console.warn("[ContactForm] E-mail enviado, mas CRM falhou. Lead já recebido por e-mail.")
+      pushGenerateLead()
       form.reset()
       router.push("/obrigado")
     } catch (err) {

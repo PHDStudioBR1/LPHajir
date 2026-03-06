@@ -48,6 +48,7 @@ import { contactFormSchema } from '@/lib/schemas';
 import { sendLeadEmail, initEmailJS } from '@/lib/emailjs-client';
 import { DEFAULT_NOTIFICATION_EMAIL } from '@/lib/email-config';
 import { applyPhoneMask } from '@/lib/phone-utils';
+import { pushGenerateLead } from '@/lib/gtm';
 
 const LPPSI_LOGO =
   'https://raw.githubusercontent.com/PHDStudioBR1/Hajer/main/Logo%20Site.svg';
@@ -805,6 +806,7 @@ function LpsiContact() {
       }
       const result = await submitContactForm(values);
       if (result.success) {
+        pushGenerateLead();
         form.reset();
         router.push('/obrigado');
         return;
