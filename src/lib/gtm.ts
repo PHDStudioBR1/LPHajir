@@ -34,7 +34,7 @@ export function getUtmFromStorage(): UtmParams {
 }
 
 /**
- * Dispara o evento 'generate_lead' no dataLayer com UTMs do localStorage.
+ * Dispara o evento 'generate_lead' no dataLayer.
  * Deve ser chamado APENAS no bloco de sucesso da submissão do formulário
  * (após envio confirmado), nunca em clique de botão ou abertura de modal.
  */
@@ -43,18 +43,5 @@ export function pushGenerateLead(): void {
   if (!window.dataLayer) {
     window.dataLayer = []
   }
-
-  const utm = getUtmFromStorage()
-  const payload: Record<string, unknown> = {
-    event: "generate_lead",
-  }
-
-  if (utm.gclid) payload.gclid = utm.gclid
-  if (utm.utm_source) payload.utm_source = utm.utm_source
-  if (utm.utm_medium) payload.utm_medium = utm.utm_medium
-  if (utm.utm_campaign) payload.utm_campaign = utm.utm_campaign
-  if (utm.utm_term) payload.utm_term = utm.utm_term
-  if (utm.utm_content) payload.utm_content = utm.utm_content
-
-  window.dataLayer.push(payload)
+  window.dataLayer.push({ event: "generate_lead" })
 }

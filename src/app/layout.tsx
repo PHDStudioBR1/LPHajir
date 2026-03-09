@@ -5,9 +5,6 @@ import { Toaster } from "@/components/ui/toaster"
 import { UtmTracker } from '@/components/analytics/utm-tracker';
 import './globals.css';
 
-/** ID do container GTM da clínica (Google Tag Manager). */
-const GTM_ID = 'GTM-MW74TJC9';
-
 const alegreya = Alegreya({
   subsets: ['latin'],
   weight: ['400', '700'],
@@ -37,7 +34,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="pt-BR" className={`!scroll-smooth ${alegreya.variable} ${ptSans.variable}`}>
-      <GoogleTagManager gtmId={GTM_ID} />
+      <GoogleTagManager gtmId="GTM-MW74TJC9" />
       <head>
         <link rel="icon" type="image/png" href="/favicon.png?v=1" />
         <link rel="shortcut icon" href="/favicon.png?v=1" type="image/png" />
@@ -46,7 +43,7 @@ export default function RootLayout({
         {/* Fallback GTM quando JavaScript está desabilitado */}
         <noscript>
           <iframe
-            src={`https://www.googletagmanager.com/ns.html?id=${GTM_ID}`}
+            src="https://www.googletagmanager.com/ns.html?id=GTM-MW74TJC9"
             height="0"
             width="0"
             style={{ display: 'none', visibility: 'hidden' }}
