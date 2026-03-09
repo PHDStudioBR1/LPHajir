@@ -227,9 +227,6 @@ export default function ContactForm({ notificationEmail = DEFAULT_NOTIFICATION_E
                   )}
                 />
 
-                <p className="text-center text-xs text-muted-foreground">
-                  Ao clicar em enviar, seus dados serão enviados com segurança e em seguida abriremos o WhatsApp para você.
-                </p>
                 <Button
                   type="submit"
                   disabled={isSubmitting}
@@ -245,6 +242,9 @@ export default function ContactForm({ notificationEmail = DEFAULT_NOTIFICATION_E
                     "Enviar e ir para o WhatsApp"
                   )}
                 </Button>
+                <p className="text-center text-xs text-muted-foreground">
+                  Seus dados estão 100% seguros e protegidos pelo sigilo médico (LGPD).
+                </p>
               </form>
             </Form>
           </CardContent>

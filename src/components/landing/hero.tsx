@@ -19,10 +19,10 @@ export default function Hero() {
               Pós-graduação em Psiquiatria e Saúde Mental • Hospital Israelita Albert Einstein
             </Badge>
             <h1 className="font-headline text-4xl font-extrabold tracking-tight text-primary md:text-5xl lg:text-5xl leading-tight">
-              Tratamento Médico Especializado em Ansiedade e Burnout
+              Psiquiatria online <span className="text-primary">acolhedora</span> para sua saúde mental
             </h1>
             <p className="max-w-xl text-lg md:text-xl text-muted-foreground font-medium leading-relaxed">
-              Dra. Hajir Abdalla (Especialista Albert Einstein). Diagnóstico preciso e tratamento médico humanizado com prescrição digital.
+              Consulta por vídeo com abordagem humana e explicativa, focada em qualidade de vida e funcionalidade. Ansiedade, burnout e bem-estar.
             </p>
           </div>
 

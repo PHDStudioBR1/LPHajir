@@ -1,22 +1,20 @@
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { ThemeToggle } from '@/components/theme-toggle';
+
+const LOGO_SRC =
+  'https://raw.githubusercontent.com/PHDStudioBR1/Hajer/main/Logo%20Site.svg';
 
 export default function Header() {
   return (
     <header className="bg-background/80 backdrop-blur-md border-b border-primary/10">
-      <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
-        <Link href="/" className="text-2xl font-bold font-headline text-primary tracking-tight">
-          Dra. Hajir Abdalla
+      <div className="container mx-auto flex h-20 items-center justify-center px-4 md:px-6">
+        <Link href="/" className="flex items-center" aria-label="Dra. Hajir Abdalla - início">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={LOGO_SRC}
+            alt="Dra. Hajir Abdalla"
+            className="h-10 md:h-12 w-auto"
+          />
         </Link>
-        <div className="flex items-center gap-4">
-          <ThemeToggle />
-          <Button asChild className="bg-cta hover:bg-accent text-white font-bold transition-all duration-300">
-            <a href="https://wa.me/5511977920368" target="_blank" rel="noopener noreferrer">
-              Agende sua consulta
-            </a>
-          </Button>
-        </div>
       </div>
     </header>
   );
