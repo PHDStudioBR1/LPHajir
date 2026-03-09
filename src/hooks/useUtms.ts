@@ -1,12 +1,11 @@
 "use client"
 
-import { useEffect, useSyncExternalStore } from "react"
-import { UTM_STORAGE_KEY, getUtmFromStorage, type UtmParams } from "@/lib/gtm"
+import { useEffect, useState } from "react"
+import { UTM_STORAGE_KEY, type UtmParams } from "@/lib/gtm"
 
 export type { UtmParams } from "@/lib/gtm"
 export { UTM_STORAGE_KEY }
 
-/** Parâmetros de campanha capturados da URL (gclid, utm_source, utm_campaign, etc.). */
 const UTMS_TO_CAPTURE = [
   "gclid",
   "utm_source",
@@ -16,31 +15,14 @@ const UTMS_TO_CAPTURE = [
   "utm_content",
 ] as const
 
-/** Cache estável para evitar loop de re-renders (React error #185): useSyncExternalStore compara por referência. */
-let cachedSnapshot: UtmParams = {}
-let cachedKey = ""
-
-function getStoredUtmsSnapshot(): UtmParams {
-  if (typeof window === "undefined") return cachedSnapshot
-  const data = getUtmFromStorage()
-  const key = JSON.stringify(data)
-  if (cachedKey === key) return cachedSnapshot
-  cachedKey = key
-  cachedSnapshot = data
-  return cachedSnapshot
-}
-
-function subscribeToStorage(cb: () => void) {
-  const handler = () => cb()
-  window.addEventListener("storage", handler)
-  return () => window.removeEventListener("storage", handler)
-}
-
 /**
- * Captura gclid e parâmetros UTM da URL na primeira carga e persiste no localStorage.
- * Use no layout/página inicial para que os UTMs estejam disponíveis no evento generate_lead.
+ * Captura gclid e UTMs da URL (apenas no cliente, após hidratação) e persiste no localStorage.
+ * Toda a leitura de URL e localStorage acontece dentro do useEffect para evitar hydration mismatch.
+ * Retorna sempre um objeto estável no primeiro render (vazio) para não causar re-renders em loop.
  */
 export function useUtms(): UtmParams {
+  const [utms] = useState<UtmParams>(() => ({}))
+
   useEffect(() => {
     if (typeof window === "undefined") return
 
@@ -57,17 +39,9 @@ export function useUtms(): UtmParams {
     try {
       window.localStorage.setItem(UTM_STORAGE_KEY, JSON.stringify(stored))
     } catch {
-      // localStorage indisponível (modo privado, etc.)
+      // localStorage indisponível (ex.: modo privado)
     }
   }, [])
 
-  return useSyncExternalStore(subscribeToStorage, getStoredUtmsSnapshot, getStoredUtmsSnapshot)
-}
-
-/**
- * Retorna os UTMs atualmente persistidos (para uso em eventos GTM, ex: generate_lead).
- * O evento pushGenerateLead em lib/gtm já injeta esses valores automaticamente.
- */
-export function getStoredUtms(): UtmParams {
-  return getUtmFromStorage()
+  return utms
 }
