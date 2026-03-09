@@ -16,9 +16,18 @@ const UTMS_TO_CAPTURE = [
   "utm_content",
 ] as const
 
+/** Cache estável para evitar loop de re-renders (React error #185): useSyncExternalStore compara por referência. */
+let cachedSnapshot: UtmParams = {}
+let cachedKey = ""
+
 function getStoredUtmsSnapshot(): UtmParams {
-  if (typeof window === "undefined") return {}
-  return getUtmFromStorage()
+  if (typeof window === "undefined") return cachedSnapshot
+  const data = getUtmFromStorage()
+  const key = JSON.stringify(data)
+  if (cachedKey === key) return cachedSnapshot
+  cachedKey = key
+  cachedSnapshot = data
+  return cachedSnapshot
 }
 
 function subscribeToStorage(cb: () => void) {
