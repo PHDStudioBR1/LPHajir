@@ -75,15 +75,11 @@ export default function ContactForm({ notificationEmail = DEFAULT_NOTIFICATION_E
         return
       }
       // 2) Enviar lead ao CRM (server action) — se falhar, o e-mail já foi enviado
-      const result = await submitContactForm(values)
-      if (result.success) {
-        pushGenerateLead()
-        form.reset()
-        router.push("/obrigado")
-        return
-      }
-      // E-mail foi enviado; CRM falhou — não bloqueia o usuário
-      console.warn("[ContactForm] E-mail enviado, mas CRM falhou. Lead já recebido por e-mail.")
+      await submitContactForm(values).catch(() => {
+        console.warn("[ContactForm] CRM falhou. Lead já recebido por e-mail.")
+      })
+
+      // Sucesso: dispara generate_lead UMA VEZ (com UTMs) e redireciona — nunca no clique ou em render
       pushGenerateLead()
       form.reset()
       router.push("/obrigado")

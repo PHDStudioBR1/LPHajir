@@ -1,13 +1,12 @@
 "use client"
 
-import { useUtmTracking } from "@/hooks/useUtmTracking"
+import { useUtms } from "@/hooks/useUtms"
 
 /**
- * Componente invisível que, no client, captura UTMs da URL e persiste no localStorage.
- * Incluído no layout raiz para que toda a aplicação tenha UTMs disponíveis
- * para o evento generate_lead e para o GTM.
+ * Componente invisível que, no client, captura UTMs da URL (gclid, utm_source, utm_campaign, etc.)
+ * e persiste no localStorage. Incluído no layout raiz para que o evento generate_lead receba esses dados.
  */
 export function UtmTracker() {
-  useUtmTracking()
+  useUtms()
   return null
 }

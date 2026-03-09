@@ -19,7 +19,7 @@ export type UtmParams = {
 }
 
 /**
- * Lê os parâmetros UTM/gclid salvos no localStorage (preenchidos pelo useUtmTracking).
+ * Lê os parâmetros UTM/gclid salvos no localStorage (preenchidos pelo hook useUtms no UtmTracker).
  */
 export function getUtmFromStorage(): UtmParams {
   if (typeof window === "undefined") return {}
