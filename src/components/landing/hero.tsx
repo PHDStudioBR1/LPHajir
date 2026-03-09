@@ -1,6 +1,6 @@
-import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { HeroImage } from '@/components/landing/hero-image';
 
 const WhatsAppIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -56,14 +56,7 @@ export default function Hero() {
         <div className="flex justify-center items-center relative">
           <div className="relative">
             <div className="absolute -inset-6 bg-accent/30 rounded-[12px] blur-3xl -z-10 animate-pulse" />
-            <Image
-              src="/images/dra-hajir-new.jpeg"
-              alt="Dra. Hajir Abdalla - Psiquiatra"
-              width={450}
-              height={550}
-              className="rounded-[12px] w-full max-w-[450px] object-cover shadow-2xl border-4 border-white"
-              priority
-            />
+            <HeroImage />
           </div>
         </div>
       </div>
