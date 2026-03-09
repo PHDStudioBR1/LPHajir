@@ -1,6 +1,6 @@
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { HeroImage } from '@/components/landing/hero-image';
 
 const WhatsAppIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -19,10 +19,10 @@ export default function Hero() {
               Pós-graduação em Psiquiatria e Saúde Mental • Hospital Israelita Albert Einstein
             </Badge>
             <h1 className="font-headline text-4xl font-extrabold tracking-tight text-primary md:text-5xl lg:text-5xl leading-tight">
-              Psiquiatria online <span className="text-primary">acolhedora</span> para sua saúde mental
+              Tratamento Médico Especializado em Ansiedade e Burnout
             </h1>
             <p className="max-w-xl text-lg md:text-xl text-muted-foreground font-medium leading-relaxed">
-              Consulta por vídeo com abordagem humana e explicativa, focada em qualidade de vida e funcionalidade. Ansiedade, burnout e bem-estar.
+              Dra. Hajir Abdalla (Especialista Albert Einstein). Diagnóstico preciso e tratamento médico humanizado com prescrição digital.
             </p>
           </div>
 
@@ -56,7 +56,14 @@ export default function Hero() {
         <div className="flex justify-center items-center relative">
           <div className="relative">
             <div className="absolute -inset-6 bg-accent/30 rounded-[12px] blur-3xl -z-10 animate-pulse" />
-            <HeroImage />
+            <Image
+              src="/images/dra-hajir-new.jpeg"
+              alt="Dra. Hajir Abdalla - Psiquiatra"
+              width={450}
+              height={550}
+              className="rounded-[12px] w-full max-w-[450px] object-cover shadow-2xl border-4 border-white"
+              priority
+            />
           </div>
         </div>
       </div>

@@ -75,11 +75,15 @@ export default function ContactForm({ notificationEmail = DEFAULT_NOTIFICATION_E
         return
       }
       // 2) Enviar lead ao CRM (server action) — se falhar, o e-mail já foi enviado
-      await submitContactForm(values).catch(() => {
-        console.warn("[ContactForm] CRM falhou. Lead já recebido por e-mail.")
-      })
-
-      // Sucesso: dispara generate_lead UMA VEZ (com UTMs) e redireciona — nunca no clique ou em render
+      const result = await submitContactForm(values)
+      if (result.success) {
+        pushGenerateLead()
+        form.reset()
+        router.push("/obrigado")
+        return
+      }
+      // E-mail foi enviado; CRM falhou — não bloqueia o usuário
+      console.warn("[ContactForm] E-mail enviado, mas CRM falhou. Lead já recebido por e-mail.")
       pushGenerateLead()
       form.reset()
       router.push("/obrigado")
@@ -223,6 +227,9 @@ export default function ContactForm({ notificationEmail = DEFAULT_NOTIFICATION_E
                   )}
                 />
 
+                <p className="text-center text-xs text-muted-foreground">
+                  Ao clicar em enviar, seus dados serão enviados com segurança e em seguida abriremos o WhatsApp para você.
+                </p>
                 <Button
                   type="submit"
                   disabled={isSubmitting}
@@ -238,9 +245,6 @@ export default function ContactForm({ notificationEmail = DEFAULT_NOTIFICATION_E
                     "Enviar e ir para o WhatsApp"
                   )}
                 </Button>
-                <p className="text-center text-xs text-muted-foreground">
-                  Seus dados estão 100% seguros e protegidos pelo sigilo médico (LGPD).
-                </p>
               </form>
             </Form>
           </CardContent>

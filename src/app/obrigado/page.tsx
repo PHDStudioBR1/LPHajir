@@ -6,25 +6,20 @@ import { CheckCircle2 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { getUtmFromStorage } from "@/lib/gtm"
 
-const WHATSAPP_NUMBER = "5511977920368"
-const WHATSAPP_MESSAGE = "Olá! Preenchi o formulário no site e gostaria de dar seguimento ao meu atendimento."
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`
-const REDIRECT_DELAY_MS = 5000
+const WHATSAPP_URL = "https://wa.me/5511977920368"
+const REDIRECT_DELAY_MS = 2000
 
 /** Evento de visualização da página de obrigado (conversão já disparada no submit do formulário como generate_lead). */
 const GTM_OBRIGADO_EVENT = "page_view_obrigado"
 
 export default function ObrigadoPage() {
   useEffect(() => {
-    if (typeof window === "undefined") return
-
-    if (window.dataLayer) {
-      const utm = getUtmFromStorage()
-      window.dataLayer.push({
-        event: GTM_OBRIGADO_EVENT,
-        ...utm,
-      })
-    }
+    if (typeof window === "undefined" || !window.dataLayer) return
+    const utm = getUtmFromStorage()
+    window.dataLayer.push({
+      event: GTM_OBRIGADO_EVENT,
+      ...utm,
+    })
 
     const t = setTimeout(() => {
       window.location.href = WHATSAPP_URL
@@ -42,14 +37,15 @@ export default function ObrigadoPage() {
         </div>
         <div className="space-y-4">
           <h1 className="font-headline text-2xl md:text-3xl font-extrabold text-primary">
-            Os seus dados foram recebidos com sucesso e estão seguros.
+            Tudo certo! Sua mensagem foi enviada.
           </h1>
           <p className="text-muted-foreground text-lg md:text-xl font-semibold">
-            Será redirecionado para o nosso WhatsApp em poucos segundos para falar com a nossa equipa...
+            Por favor, aguarde alguns segundos: você será redirecionado automaticamente para o atendimento da
+            equipe pelo WhatsApp.
           </p>
         </div>
         <p className="text-sm md:text-base text-muted-foreground">
-          Não quer esperar? Use o botão abaixo para ir agora.
+          Se o redirecionamento não acontecer, use o botão abaixo para falar com nossa equipe agora mesmo.
         </p>
         <Button
           id="whatsapp-manual-fallback"
@@ -58,7 +54,7 @@ export default function ObrigadoPage() {
           size="lg"
         >
           <Link href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer">
-            Ir para o WhatsApp agora
+            Clique aqui se o seu WhatsApp não abriu
           </Link>
         </Button>
       </div>

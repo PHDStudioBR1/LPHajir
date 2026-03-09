@@ -18,32 +18,46 @@ export default function Footer() {
   return (
     <footer className="w-full bg-primary py-16 text-white">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex flex-col items-center text-center space-y-8">
-          <Link href="/" className="text-2xl font-bold font-headline text-white tracking-tight">
-            Dra. Hajir Abdalla
-          </Link>
-          <p className="text-white/70 max-w-md">
-            Especialista em psiquiatria e saúde mental, oferecendo suporte especializado com empatia e acolhimento.
-          </p>
-          <div className="flex gap-4">
-            <a href="https://www.facebook.com/drahajirabdalla" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-accent transition-colors" aria-label="Facebook da Dra. Hajir Abdalla">
-              <Facebook className="h-5 w-5" aria-hidden />
-            </a>
-            <a href="https://www.instagram.com/drahaabdalla/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-accent transition-colors" aria-label="Instagram da Dra. Hajir Abdalla">
-              <Instagram className="h-5 w-5" aria-hidden />
-            </a>
-            <a href="https://www.tiktok.com/@drahaabdalla" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-accent transition-colors" aria-label="TikTok da Dra. Hajir Abdalla">
-              <TikTokIcon className="h-5 w-5" aria-hidden />
-            </a>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 items-start">
+          <div className="flex flex-col space-y-6">
+            <Link href="/" className="text-2xl font-bold font-headline text-white tracking-tight">
+              Dra. Hajir Abdalla
+            </Link>
+            <p className="text-white/70 max-w-xs">
+              Especialista em psiquiatria e saúde mental, oferecendo suporte especializado com empatia e acolhimento.
+            </p>
+            <div className="flex gap-4">
+              <a href="https://www.facebook.com/drahajirabdalla" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-accent transition-colors" aria-label="Facebook da Dra. Hajir Abdalla">
+                <Facebook className="h-5 w-5" aria-hidden />
+              </a>
+              <a href="https://www.instagram.com/drahaabdalla/" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-accent transition-colors" aria-label="Instagram da Dra. Hajir Abdalla">
+                <Instagram className="h-5 w-5" aria-hidden />
+              </a>
+              <a href="https://www.tiktok.com/@drahaabdalla" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-accent transition-colors" aria-label="TikTok da Dra. Hajir Abdalla">
+                <TikTokIcon className="h-5 w-5" aria-hidden />
+              </a>
+            </div>
           </div>
-          <Button asChild className="bg-cta hover:bg-accent text-white font-bold h-auto py-4 rounded-full transition-all">
-            <a href="/#contact">
-              Agendar consulta
-            </a>
-          </Button>
-          <p className="text-sm text-white/50">
-            Atendimento online disponível para todo o Brasil.
-          </p>
+
+          <div className="flex flex-col space-y-4">
+            <h3 className="font-bold text-lg text-white">Links Úteis</h3>
+            <Link href="https://drahaabdalla.com" className="text-white/70 hover:text-accent transition-colors">Site Oficial</Link>
+            <Link href="#specialties" className="text-white/70 hover:text-accent transition-colors">Especialidades</Link>
+            <Link href="#testimonials" className="text-white/70 hover:text-accent transition-colors">Depoimentos</Link>
+            <button className="text-left text-white/70 hover:text-accent transition-colors">Política de Privacidade</button>
+          </div>
+
+          <div className="flex flex-col space-y-6">
+            <h3 className="font-bold text-lg text-white">Agende agora</h3>
+            <Button asChild className="bg-cta hover:bg-accent text-white font-bold h-auto py-4 rounded-full transition-all">
+              <a href="/#contact">
+                Comece sua jornada hoje
+              </a>
+            </Button>
+            <p className="text-sm text-white/50">
+              Atendimento Online disponível para todo o Brasil.
+            </p>
+          </div>
         </div>
 
         <div className="mt-16 pt-8 border-t border-white/10 text-center text-white/40 text-sm">

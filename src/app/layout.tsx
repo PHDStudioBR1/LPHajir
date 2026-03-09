@@ -5,8 +5,8 @@ import { Toaster } from "@/components/ui/toaster"
 import { UtmTracker } from '@/components/analytics/utm-tracker';
 import './globals.css';
 
-/** ID do container GTM (Google Tag Manager). Substitua GTM-INSERIR-AQUI pelo seu ID real ou defina NEXT_PUBLIC_GTM_ID. */
-const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID ?? 'GTM-MW74TJC9';
+/** ID do container GTM da clínica (Google Tag Manager). */
+const GTM_ID = 'GTM-MW74TJC9';
 
 const alegreya = Alegreya({
   subsets: ['latin'],
