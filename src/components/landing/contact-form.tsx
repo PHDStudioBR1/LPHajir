@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
-import { Loader2, Mail, MessageCircle, User } from "lucide-react"
+import { Loader2, Mail, MessageCircle, User, Lock } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -102,8 +102,8 @@ export default function ContactForm({ notificationEmail = DEFAULT_NOTIFICATION_E
   return (
     <section id="contact" className="w-full bg-background py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6">
-        <Card className="max-w-2xl mx-auto shadow-lg">
-          <CardHeader className="text-center">
+        <Card className="max-w-2xl mx-auto bg-white dark:bg-zinc-900 shadow-2xl rounded-3xl border border-primary/10 p-2 sm:p-4">
+          <CardHeader className="text-center space-y-3">
             <CardTitle className="text-3xl font-headline font-bold">Entre em Contato</CardTitle>
             <CardDescription>
               Prefere enviar uma mensagem? Preencha o formulário abaixo.
@@ -115,7 +115,7 @@ export default function ContactForm({ notificationEmail = DEFAULT_NOTIFICATION_E
               </p>
             </div>
           </CardHeader>
-            <CardContent className="relative">
+          <CardContent className="relative">
             {isSubmitting && (
               <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded-lg bg-background/90 backdrop-blur-sm text-center px-6">
                 <Loader2 className="h-14 w-14 animate-spin text-primary" />
@@ -233,7 +233,7 @@ export default function ContactForm({ notificationEmail = DEFAULT_NOTIFICATION_E
                 <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-cta hover:bg-accent text-white font-bold h-auto py-4 rounded-full shadow-lg disabled:opacity-70 disabled:cursor-not-allowed"
+                  className="group relative w-full bg-green-600 hover:bg-green-500 text-white font-bold h-auto py-4 rounded-full shadow-2xl disabled:opacity-70 disabled:cursor-not-allowed inline-flex items-center justify-center gap-2 focus-visible:ring-4 focus-visible:ring-green-300 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
                   size="lg"
                 >
                   {isSubmitting ? (
@@ -242,9 +242,16 @@ export default function ContactForm({ notificationEmail = DEFAULT_NOTIFICATION_E
                       Enviando...
                     </>
                   ) : (
-                    "Enviar e ir para o WhatsApp"
+                    <>
+                      <span className="absolute inset-0 -z-10 rounded-full bg-green-600/40 blur-xl opacity-70 group-hover:opacity-100 group-focus-visible:opacity-100 animate-pulse" />
+                      Enviar e ir para o WhatsApp
+                    </>
                   )}
                 </Button>
+                <p className="mt-2 flex items-center justify-center gap-2 text-center text-xs text-muted-foreground">
+                  <Lock className="h-3 w-3" />
+                  <span>Seus dados estão seguros e o contato é 100% sigiloso.</span>
+                </p>
               </form>
             </Form>
           </CardContent>

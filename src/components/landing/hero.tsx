@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { ArrowRight, ShieldCheck, Lock, FileText } from 'lucide-react';
 
 const WhatsAppIcon = ({ className }: { className?: string }) => (
   <svg className={className} viewBox="0 0 24 24" fill="currentColor" aria-hidden>
@@ -19,10 +20,10 @@ export default function Hero() {
               Pós-graduação em Psiquiatria e Saúde Mental • Hospital Israelita Albert Einstein
             </Badge>
             <h1 className="font-headline text-4xl font-extrabold tracking-tight text-primary md:text-5xl lg:text-5xl leading-tight">
-              Tratamento Médico Especializado em Ansiedade e Burnout
+              Tratamento Psiquiátrico Especializado para Ansiedade e Burnout com a Qualidade Albert Einstein.
             </h1>
             <p className="max-w-xl text-lg md:text-xl text-muted-foreground font-medium leading-relaxed">
-              Dra. Hajir Abdalla (Especialista Albert Einstein). Diagnóstico preciso e tratamento médico humanizado com prescrição digital.
+              O esgotamento mental e as crises de ansiedade não precisam ser a sua rotina. Receba um diagnóstico clínico preciso e inicie seu tratamento online, de onde estiver, com prescrição médica digital válida em qualquer farmácia do Brasil.
             </p>
           </div>
 
@@ -37,14 +38,30 @@ export default function Hero() {
             />
           </div>
 
-          <div className="flex flex-col items-center md:items-start gap-2 w-full md:w-max">
+          <div className="flex flex-col items-center md:items-start gap-4 w-full md:w-max">
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 text-xs md:text-sm text-muted-foreground">
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/10 bg-primary/5 px-3 py-1">
+                <ShieldCheck className="h-4 w-4 text-primary" />
+                <span className="font-medium">Pós-graduação Albert Einstein</span>
+              </div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/10 bg-primary/5 px-3 py-1">
+                <Lock className="h-4 w-4 text-primary" />
+                <span className="font-medium">Sigilo médico absoluto</span>
+              </div>
+              <div className="inline-flex items-center gap-2 rounded-full border border-primary/10 bg-primary/5 px-3 py-1">
+                <FileText className="h-4 w-4 text-primary" />
+                <span className="font-medium">Receita digital nacional</span>
+              </div>
+            </div>
             <Button
               asChild
-              className="bg-green-600 hover:bg-green-700 text-white font-bold text-lg px-8 py-6 h-auto rounded-full shadow-xl transition-all duration-300 hover:scale-[1.02] active:scale-[0.98] w-full md:w-auto inline-flex items-center justify-center gap-2"
+              className="group relative bg-green-600 hover:bg-green-500 text-white font-bold text-lg px-8 py-6 h-auto rounded-full shadow-xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] w-full md:w-auto inline-flex items-center justify-center gap-2 focus-visible:ring-4 focus-visible:ring-green-300 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               <a href="/#contact">
+                <span className="absolute inset-0 -z-10 rounded-full bg-green-600/40 blur-xl opacity-70 group-hover:opacity-100 group-focus-visible:opacity-100 animate-pulse" />
                 <WhatsAppIcon className="h-5 w-5 shrink-0" />
-                Falar com a Secretária
+                Consultar disponibilidade da agenda
+                <ArrowRight className="h-5 w-5 shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
               </a>
             </Button>
             <p className="text-sm text-muted-foreground text-center md:text-left">

@@ -5,17 +5,26 @@ const specialties = [
   {
     icon: <SmilePlus className="h-12 w-12 text-primary" />,
     title: 'Ansiedade',
-    description: 'Recupere sua tranquilidade com estratégias modernas e baseadas em evidências para o controle da ansiedade.',
+    description:
+      'Protocolos médicos para interrupção de crises e controle da ansiedade generalizada.',
+  },
+  {
+    icon: <HeartPulse className="h-12 w-12 text-primary" />,
+    title: 'Burnout',
+    description:
+      'Diagnóstico clínico e manejo do esgotamento profissional crônico.',
   },
   {
     icon: <HeartPulse className="h-12 w-12 text-primary" />,
     title: 'Depressão',
-    description: 'Tratamento acolhedor e especializado para superar a depressão e reconstruir sua vitalidade e alegria.',
+    description:
+      'Tratamento psiquiátrico para o resgate da estabilidade química cerebral.',
   },
   {
     icon: <BrainCircuit className="h-12 w-12 text-primary" />,
     title: 'Transtornos de Humor',
-    description: 'Abordagem focada na estabilidade emocional e equilíbrio para transtorno bipolar e outras variações de humor.',
+    description:
+      'Mapeamento psiquiátrico para estabilização de variações bruscas de comportamento.',
   },
 ];
 
@@ -26,9 +35,17 @@ export default function Specialties() {
         <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16">
           <h2 className="text-3xl font-headline font-bold tracking-tight text-primary sm:text-4xl md:text-5xl">Especialidades</h2>
           <div className="w-20 h-1 bg-accent rounded-full mb-4" />
-          <p className="max-w-[700px] text-muted-foreground text-lg md:text-xl">
-            Atendimento especializado focado nas principais demandas de saúde mental da atualidade.
-          </p>
+          <div className="max-w-[700px] text-muted-foreground text-lg md:text-xl space-y-4 text-left md:text-center">
+            <p>
+              Dormir exausto e acordar cansado. O peso no peito antes de começar o dia de trabalho. A mente que não desliga durante a noite e a sensação constante de que algo ruim vai acontecer. Se você está aqui, sabe exatamente como isso consome a sua energia vital.
+            </p>
+            <p>
+              Ignorar esses sinais tem um custo alto. O estresse crônico acumulado evolui para o Burnout. A ansiedade não tratada afeta suas relações e paralisa suas decisões. A depressão rouba a vontade de fazer o que antes trazia prazer. Tentar resolver isso sozinho, ou com paliativos, apenas prolonga o sofrimento e agrava o quadro clínico.
+            </p>
+            <p>
+              Você precisa de uma intervenção médica baseada em evidências. Como especialista com pós-graduação pelo Hospital Israelita Albert Einstein, meu papel é mapear a raiz do seu sofrimento mental, oferecer um diagnóstico exato e estabelecer um protocolo de tratamento claro. Uma conversa estruturada, sigilosa e focada em devolver o controle da sua vida.
+            </p>
+          </div>
         </div>
         <div className="grid grid-cols-1 gap-12 sm:grid-cols-2 lg:grid-cols-3">
           {specialties.map((specialty, index) => (

@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/carousel"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from '@/components/ui/button';
+import { ArrowRight } from "lucide-react";
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
 const testimonials = [
@@ -44,18 +45,34 @@ export default function Testimonials() {
   return (
     <section id="testimonials" className="w-full bg-background py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
-          <div className="flex flex-col items-center p-6 bg-primary/5 rounded-2xl border border-primary/10">
-            <span className="text-4xl font-bold text-primary mb-2">+ de 1500</span>
-            <span className="text-muted-foreground font-medium">Pacientes atendidos online</span>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
+          <div className="flex flex-col items-center p-6 bg-primary/5 rounded-2xl border border-primary/10 text-center">
+            <span className="text-4xl font-bold text-primary mb-2">+ 1.500</span>
+            <span className="text-muted-foreground font-medium">
+              Mais de 1.500 pacientes atendidos em todo o Brasil.
+            </span>
           </div>
-          <div className="flex flex-col items-center p-6 bg-primary/5 rounded-2xl border border-primary/10">
+          <div className="flex flex-col items-center p-6 bg-primary/5 rounded-2xl border border-primary/10 text-center">
             <span className="text-4xl font-bold text-primary mb-2">95%</span>
-            <span className="text-muted-foreground font-medium">Relatam melhora significativa</span>
+            <span className="text-muted-foreground font-medium">
+              95% dos pacientes relatam eficácia clínica e melhora dos sintomas.
+            </span>
           </div>
-          <div className="flex flex-col items-center p-6 bg-primary/5 rounded-2xl border border-primary/10">
-            <span className="text-2xl font-bold text-primary mb-2 text-center">Documentos com assinatura digital válida</span>
-            <span className="text-muted-foreground font-medium text-center">Em todo território nacional</span>
+          <div className="flex flex-col items-center p-6 bg-primary/5 rounded-2xl border border-primary/10 text-center">
+            <span className="text-2xl font-bold text-primary mb-2 text-center">
+              Nota Fiscal para reembolso
+            </span>
+            <span className="text-muted-foreground font-medium text-center">
+              Emissão de Nota Fiscal para processos de reembolso no seu convênio médico.
+            </span>
+          </div>
+          <div className="flex flex-col items-center p-6 bg-primary/5 rounded-2xl border border-primary/10 text-center">
+            <span className="text-2xl font-bold text-primary mb-2 text-center">
+              Certificação digital nacional
+            </span>
+            <span className="text-muted-foreground font-medium text-center">
+              Documentos e receitas controladas emitidas com certificação digital nacional.
+            </span>
           </div>
         </div>
 
@@ -103,9 +120,14 @@ export default function Testimonials() {
           <CarouselNext className="hidden sm:flex" />
         </Carousel>
         <div className="mt-16 flex justify-center">
-          <Button asChild className="bg-cta hover:bg-accent text-white font-bold text-xl px-12 py-8 h-auto rounded-full shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95">
-            <a href="/#contact">
+          <Button
+            asChild
+            className="group relative bg-green-600 hover:bg-green-500 text-white font-bold text-xl px-12 py-8 h-auto rounded-full shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:ring-4 focus-visible:ring-green-300 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+          >
+            <a href="/#contact" className="inline-flex items-center gap-2">
+              <span className="absolute inset-0 -z-10 rounded-full bg-green-600/40 blur-xl opacity-70 group-hover:opacity-100 group-focus-visible:opacity-100 animate-pulse" />
               Reserve sua vaga hoje
+              <ArrowRight className="h-5 w-5 shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
             </a>
           </Button>
         </div>

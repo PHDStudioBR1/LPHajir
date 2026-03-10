@@ -30,6 +30,7 @@ import {
   Music2,
   ArrowRight,
   Loader2,
+  AlertTriangle,
 } from 'lucide-react';
 import {
   Form,
@@ -221,24 +222,27 @@ function LpsiHero() {
     <section className="pt-32 pb-20 md:pt-48 md:pb-32 bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-slate-800 relative overflow-hidden">
       <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center relative z-10">
         <div className="max-w-2xl">
-          <span className="inline-block bg-blue-100 text-[#2D5B7C] dark:bg-slate-800 dark:text-slate-200 px-4 py-1.5 rounded-full text-sm font-semibold mb-6">
-            Atendimento 100% Online
+          <span className="inline-flex items-center gap-2 bg-blue-100 text-[#2D5B7C] dark:bg-slate-800 dark:text-slate-200 px-4 py-1.5 rounded-full text-xs md:text-sm font-semibold mb-4">
+            <AlertTriangle className="h-4 w-4" />
+            Esgotamento mental, ansiedade corporativa e crises de pânico
           </span>
           <h1 className="text-4xl md:text-6xl font-bold text-slate-900 dark:text-white leading-tight mb-6">
-            Psiquiatria online{' '}
-            <span className="text-[#2D5B7C]">acolhedora</span> para sua saúde
-            mental
+            Sua mente não desliga, o trabalho não espera e o corpo pede socorro.
           </h1>
-          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 mb-10 leading-relaxed">
-            Consulta por vídeo com abordagem humana e explicativa, focada em
-            qualidade de vida e funcionalidade.
+          <p className="text-lg md:text-xl text-slate-600 dark:text-slate-300 mb-4 leading-relaxed">
+            Reuniões intermináveis, cobranças constantes, medo de errar e de ser “descoberto” como insuficiente. Por fora, você entrega. Por dentro, a ansiedade corrói cada decisão e o sono nunca é realmente reparador.
+          </p>
+          <p className="text-base md:text-lg text-slate-600 dark:text-slate-300 mb-8 leading-relaxed">
+            Quando o esgotamento mental atinge esse nível, não é mais questão de “aguentar firme”. É um quadro clínico que precisa de intervenção psiquiátrica especializada, com diagnóstico preciso e tratamento baseado em evidências.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link
               href="#contato"
-              className="flex items-center justify-center gap-2 bg-[#2D5B7C] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-[#1e3d54] transition-all shadow-xl hover:-translate-y-1"
+              className="group relative flex items-center justify-center gap-2 bg-green-600 hover:bg-green-500 text-white px-8 py-4 rounded-full font-bold text-lg transition-all shadow-xl hover:-translate-y-1 focus-visible:ring-4 focus-visible:ring-green-300 focus-visible:ring-offset-2 focus-visible:ring-offset-slate-50 dark:focus-visible:ring-offset-slate-900"
             >
-              Agendar teleconsulta
+              <span className="absolute inset-0 -z-10 rounded-full bg-green-600/40 blur-xl opacity-70 group-hover:opacity-100 group-focus-visible:opacity-100 animate-pulse" />
+              Agendar avaliação psiquiátrica online
+              <ArrowRight className="h-5 w-5 shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
             </Link>
             <a
               href={`https://wa.me/${WHATSAPP_NUMBER}`}
@@ -341,34 +345,34 @@ function LpsiHowItWorks() {
 function LpsiAreas() {
   const specialties = [
     {
-      title: 'Ansiedade',
+      title: 'Ansiedade Corporativa',
       icon: <Activity />,
-      desc: 'Tratamento para quadros de preocupação excessiva, pânico e fobias que impactam seu dia a dia.',
+      desc: 'Quadros de preocupação constante com desempenho, medo de falhar, crises de pânico antes de reuniões e sensação de “travar” na hora de decidir.',
     },
     {
-      title: 'Depressão',
-      icon: <Heart />,
-      desc: 'Suporte especializado para recuperar o ânimo, a energia e o prazer nas atividades cotidianas.',
-    },
-    {
-      title: 'Insônia',
-      icon: <Moon />,
-      desc: 'Higiene do sono e intervenções para distúrbios que afetam sua reparação física e mental.',
-    },
-    {
-      title: 'Burnout',
+      title: 'Esgotamento Profissional (Burnout)',
       icon: <Zap />,
-      desc: 'Cuidado focado em estresse crônico relacionado ao trabalho e exaustão emocional.',
+      desc: 'Exaustão profunda, irritabilidade, choro fácil, perda de sentido no trabalho e sensação de que qualquer tarefa simples virou um fardo gigante.',
     },
     {
-      title: 'Humor',
+      title: 'Ansiedade Generalizada',
+      icon: <Heart />,
+      desc: 'Mente acelerada, antecipação constante de cenários ruins, taquicardia, desconforto físico e dificuldade extrema de relaxar mesmo fora do expediente.',
+    },
+    {
+      title: 'Transtornos de Humor',
       icon: <Brain />,
-      desc: 'Diagnóstico e manejo de transtornos bipolares e oscilações emocionais intensas.',
+      desc: 'Oscilações intensas entre períodos de alta produtividade e fases de apatia e incapacidade de reagir, afetando carreira, relações e autoimagem.',
+    },
+    {
+      title: 'Insônia e Sono Que Não Repara',
+      icon: <Moon />,
+      desc: 'Dificuldade para adormecer, acordar várias vezes à noite ou despertar já cansado, como se o cérebro nunca desligasse completamente.',
     },
     {
       title: 'TDAH Adulto',
       icon: <Dna />,
-      desc: 'Foco em funcionalidade, organização e estratégias para melhorar a atenção e o foco.',
+      desc: 'Dificuldade em priorizar, concluir tarefas, organizar demandas e manter foco em ambientes de alta pressão e múltiplos estímulos.',
     },
   ];
 
@@ -377,10 +381,10 @@ function LpsiAreas() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-4">
-            Áreas de atuação
+            Quando o trabalho começa a cobrar da sua saúde mental
           </h2>
           <p className="text-slate-600 dark:text-slate-300 max-w-2xl mx-auto">
-            Tratamento focado em devolver sua funcionalidade e bem-estar.
+            Não é “frescura”, não é falta de força de vontade. É um conjunto de sintomas que, sem tratamento adequado, pode evoluir para afastamentos, perda de desempenho e rompimentos importantes na sua vida pessoal e profissional.
           </p>
         </div>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -440,30 +444,21 @@ function LpsiAbout() {
         </div>
         <div>
           <h2 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6">
-            Abordagem humanizada e neurofuncional
+            Solução: psiquiatria estratégica para quem lidera, decide e não pode simplesmente “parar”
           </h2>
           <div className="space-y-6 text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
             <p>
-              Minha prática clínica é baseada na construção de um{' '}
-              <span className="text-[#2D5B7C] font-semibold">elo de confiança</span>{' '}
-              genuíno. Acredito que o paciente deve entender o porquê de cada
-              decisão terapêutica.
+              Você não precisa escolher entre cuidar da sua saúde mental e manter a alta performance. Minha atuação combina escuta profunda, análise clínica minuciosa e explicações claras sobre o que está acontecendo com o seu cérebro sob estresse intenso.
             </p>
             <p>
-              Trabalho com uma{' '}
-              <span className="text-[#7EAA92] font-semibold">
-                explicação neurofuncional acessível
-              </span>
-              , integrando o cuidado mente-corpo para que você tenha autonomia
-              sobre sua própria saúde.
+              A partir de uma consulta estruturada, definimos juntos um plano terapêutico que pode envolver ajuste medicamentoso, mudanças de rotina e estratégias práticas para que você volte a decidir com clareza — sem que a ansiedade, o medo ou o cansaço extremo ditem o ritmo da sua vida.
             </p>
             <div className="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl border-l-4 border-[#2D5B7C]">
               <h4 className="font-bold text-slate-900 dark:text-white mb-2">
                 Formação de Excelência
               </h4>
               <p className="text-base">
-                Médica com especialização em Psiquiatria, focada em atualização
-                contínua e medicina baseada em evidências.
+                Médica psiquiatra com pós-graduação pelo Hospital Israelita Albert Einstein, com foco em quadros de ansiedade, Burnout, transtornos de humor e esgotamento mental em adultos em idade produtiva.
               </p>
             </div>
           </div>
