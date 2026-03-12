@@ -14,6 +14,8 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight } from "lucide-react";
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 
+const WHATSAPP_NUMBER = '5511977920368';
+
 const testimonials = [
   {
     id: 1,
@@ -124,9 +126,14 @@ export default function Testimonials() {
             asChild
             className="group relative bg-green-600 hover:bg-green-500 text-white font-bold text-xl px-12 py-8 h-auto rounded-full shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 focus-visible:ring-4 focus-visible:ring-green-300 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
-            <a href="/#contact" className="inline-flex items-center gap-2">
+            <a
+              href={`https://wa.me/${WHATSAPP_NUMBER}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2"
+            >
               <span className="absolute inset-0 -z-10 rounded-full bg-green-600/40 blur-xl opacity-70 group-hover:opacity-100 group-focus-visible:opacity-100 animate-pulse" />
-              Reserve sua vaga hoje
+              Reserve sua vaga hoje pelo WhatsApp
               <ArrowRight className="h-5 w-5 shrink-0 transition-transform duration-300 group-hover:translate-x-1" />
             </a>
           </Button>

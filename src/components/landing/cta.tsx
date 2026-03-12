@@ -1,5 +1,7 @@
 import { Button } from '@/components/ui/button';
 
+const WHATSAPP_NUMBER = '5511977920368';
+
 export default function Cta() {
   return (
     <section id="cta" className="w-full bg-white py-16 md:py-24">
@@ -11,8 +13,12 @@ export default function Cta() {
           Agende sua consulta psiquiátrica e inicie sua jornada de cura com suporte profissional especializado. Estou aqui para ajudar você.
         </p>
         <Button size="lg" asChild>
-          <a href="/#contact">
-            Agende sua consulta agora
+          <a
+            href={`https://wa.me/${WHATSAPP_NUMBER}`}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Agende sua consulta agora pelo WhatsApp
           </a>
         </Button>
       </div>

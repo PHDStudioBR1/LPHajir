@@ -2,6 +2,8 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Facebook, Instagram } from 'lucide-react';
 
+const WHATSAPP_NUMBER = '5511977920368';
+
 const TikTokIcon = ({ className }: { className?: string }) => (
   <svg
     role="img"
@@ -50,8 +52,12 @@ export default function Footer() {
           <div className="flex flex-col space-y-6">
             <h3 className="font-bold text-lg text-white">Agende agora</h3>
             <Button asChild className="bg-cta hover:bg-accent text-white font-bold h-auto py-4 rounded-full transition-all">
-              <a href="/#contact">
-                Comece sua jornada hoje
+              <a
+                href={`https://wa.me/${WHATSAPP_NUMBER}`}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Comece sua jornada hoje pelo WhatsApp
               </a>
             </Button>
             <p className="text-sm text-white/50">

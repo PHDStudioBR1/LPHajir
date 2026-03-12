@@ -1,5 +1,7 @@
 import { Button } from '@/components/ui/button';
 
+const WHATSAPP_NUMBER = '5511977920368';
+
 export default function UrgencySection() {
   return (
     <section className="w-full bg-primary py-20 relative overflow-hidden">
@@ -16,7 +18,11 @@ export default function UrgencySection() {
             asChild
             className="bg-cta hover:bg-accent text-white font-bold text-xl px-12 py-8 h-auto rounded-full shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 mt-4"
           >
-            <a href="/#contact">
+            <a
+              href={`https://wa.me/${WHATSAPP_NUMBER}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               Falar com a equipe de triagem no WhatsApp
             </a>
           </Button>
