@@ -22,7 +22,7 @@ export default function Hero() {
               Atendimento médico em saúde mental.
             </Badge>
             <h1 className="font-headline text-4xl font-extrabold tracking-tight text-primary md:text-5xl lg:text-5xl leading-tight">
-              Acompanhamento Médico Focado em Ansiedade e Burnout.
+              Acompanhamento Médico Focado em Ansiedade.
             </h1>
             <p className="max-w-xl text-lg md:text-xl text-muted-foreground font-medium leading-relaxed">
               O esgotamento mental e as crises de ansiedade não precisam ser a sua rotina. Receba um diagnóstico clínico preciso e inicie seu tratamento online, de onde estiver, com prescrição médica digital válida em qualquer farmácia do Brasil.
