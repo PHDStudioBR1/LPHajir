@@ -12,7 +12,7 @@ export default function UrgencySection() {
             Vagas restritas para novos acompanhamentos.
           </h2>
           <p className="text-white/80 text-lg md:text-xl max-w-3xl font-medium leading-relaxed">
-            O tratamento psiquiátrico exige escuta atenta e acompanhamento meticuloso. Por esse motivo, a agenda mensal possui um limite estrito de vagas para novos pacientes. Isso garante que cada consulta receba o tempo e a atenção clínica necessários.
+            O tratamento médico exige escuta atenta e acompanhamento meticuloso. Por esse motivo, a agenda mensal possui um limite estrito de vagas para novos pacientes. Isso garante que cada consulta receba o tempo e a atenção clínica necessários.
           </p>
           <Button
             asChild

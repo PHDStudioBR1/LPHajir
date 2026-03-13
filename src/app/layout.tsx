@@ -20,8 +20,8 @@ const ptSans = PT_Sans({
 });
 
 export const metadata: Metadata = {
-  title: 'Dra. Hajir Abdalla - Psiquiatria Online',
-  description: 'Psiquiatria online com Dra. Hajir Abdalla. Atendimento humanizado e especializado para sua saúde mental.',
+  title: 'Dra. Hajir Abdalla - Atendimento Médico Online',
+  description: 'Atendimento médico online com Dra. Hajir Abdalla. Atendimento humanizado para sua saúde mental.',
   verification: {
     google: 'h8oY6MAoigKMznqyR4czmPLX_ylOfkPmz-Tp1Uqw4mQ',
   },

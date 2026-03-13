@@ -19,10 +19,10 @@ export default function Hero() {
         <div className="flex flex-col justify-center items-center md:items-start space-y-8 text-center md:text-left">
           <div className="space-y-4 w-full">
             <Badge variant="secondary" className="mb-2 w-fit mx-auto md:mx-0 text-xs font-semibold uppercase tracking-wider text-primary border-primary/20 bg-primary/5">
-              Pós-graduação em Psiquiatria e Saúde Mental • Hospital Israelita Albert Einstein
+              Atendimento médico em saúde mental.
             </Badge>
             <h1 className="font-headline text-4xl font-extrabold tracking-tight text-primary md:text-5xl lg:text-5xl leading-tight">
-              Tratamento Psiquiátrico Especializado para Ansiedade e Burnout com a Qualidade Albert Einstein.
+              Acompanhamento Médico Focado em Ansiedade e Burnout.
             </h1>
             <p className="max-w-xl text-lg md:text-xl text-muted-foreground font-medium leading-relaxed">
               O esgotamento mental e as crises de ansiedade não precisam ser a sua rotina. Receba um diagnóstico clínico preciso e inicie seu tratamento online, de onde estiver, com prescrição médica digital válida em qualquer farmácia do Brasil.
@@ -81,7 +81,7 @@ export default function Hero() {
             <div className="absolute -inset-6 bg-accent/30 rounded-[12px] blur-3xl -z-10 animate-pulse" />
             <Image
               src="/images/dra-hajir-new.jpeg"
-              alt="Dra. Hajir Abdalla - Psiquiatra"
+              alt="Dra. Hajir Abdalla"
               width={450}
               height={550}
               className="rounded-[12px] w-full max-w-[450px] object-cover shadow-2xl border-4 border-white"

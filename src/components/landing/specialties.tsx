@@ -18,13 +18,13 @@ const specialties = [
     icon: <HeartPulse className="h-12 w-12 text-primary" />,
     title: 'Depressão',
     description:
-      'Tratamento psiquiátrico para o resgate da estabilidade química cerebral.',
+      'Tratamento médico para o resgate da estabilidade química cerebral.',
   },
   {
     icon: <BrainCircuit className="h-12 w-12 text-primary" />,
     title: 'Transtornos de Humor',
     description:
-      'Mapeamento psiquiátrico para estabilização de variações bruscas de comportamento.',
+      'Mapeamento médico para estabilização de variações bruscas de comportamento.',
   },
 ];
 
@@ -33,7 +33,7 @@ export default function Specialties() {
     <section id="specialties" className="w-full bg-[#F8F9FA] py-16 md:py-24">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center mb-16">
-          <h2 className="text-3xl font-headline font-bold tracking-tight text-primary sm:text-4xl md:text-5xl">Especialidades</h2>
+          <h2 className="text-3xl font-headline font-bold tracking-tight text-primary sm:text-4xl md:text-5xl">Áreas de Atuação</h2>
           <div className="w-20 h-1 bg-accent rounded-full mb-4" />
           <div className="max-w-[700px] text-muted-foreground text-lg md:text-xl space-y-4 text-left md:text-center">
             <p>
@@ -43,7 +43,7 @@ export default function Specialties() {
               Ignorar esses sinais tem um custo alto. O estresse crônico acumulado evolui para o Burnout. A ansiedade não tratada afeta suas relações e paralisa suas decisões. A depressão rouba a vontade de fazer o que antes trazia prazer. Tentar resolver isso sozinho, ou com paliativos, apenas prolonga o sofrimento e agrava o quadro clínico.
             </p>
             <p>
-              Você precisa de uma intervenção médica baseada em evidências. Como especialista com pós-graduação pelo Hospital Israelita Albert Einstein, meu papel é mapear a raiz do seu sofrimento mental, oferecer um diagnóstico exato e estabelecer um protocolo de tratamento claro. Uma conversa estruturada, sigilosa e focada em devolver o controle da sua vida.
+              Você precisa de uma intervenção médica baseada em evidências. Meu papel como médica é mapear a raiz do seu sofrimento, oferecer um diagnóstico exato e estabelecer um protocolo de tratamento claro. Uma conversa estruturada, sigilosa e focada em devolver o controle da sua vida.
             </p>
           </div>
         </div>

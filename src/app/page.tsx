@@ -11,9 +11,7 @@ export default function Home() {
   const notificationEmail = process.env.NEXT_PUBLIC_NOTIFICATION_EMAIL ?? undefined
   return (
     <div className="flex min-h-screen flex-col">
-      <div className="fixed top-0 left-0 right-0 z-[9999]">
-        <Header />
-      </div>
+      <Header />
       <main className="flex-1 pt-40 md:pt-40 pb-20 md:pb-0">
         <Hero />
         <Specialties />

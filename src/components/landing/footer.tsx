@@ -26,7 +26,7 @@ export default function Footer() {
               Dra. Hajir Abdalla
             </Link>
             <p className="text-white/70 max-w-xs">
-              Especialista em psiquiatria e saúde mental, oferecendo suporte especializado com empatia e acolhimento.
+              Dra. Hajir Abdalla - CRM SP 207200 | Médica com atuação em Saúde Mental, oferecendo suporte clínico com empatia e acolhimento.
             </p>
             <div className="flex gap-4">
               <a href="https://www.facebook.com/drahajirabdalla" target="_blank" rel="noopener noreferrer" className="p-2 rounded-full bg-white/10 hover:bg-accent transition-colors" aria-label="Facebook da Dra. Hajir Abdalla">
@@ -44,7 +44,7 @@ export default function Footer() {
           <div className="flex flex-col space-y-4">
             <h3 className="font-bold text-lg text-white">Links Úteis</h3>
             <Link href="https://drahaabdalla.com" className="text-white/70 hover:text-accent transition-colors">Site Oficial</Link>
-            <Link href="#specialties" className="text-white/70 hover:text-accent transition-colors">Especialidades</Link>
+            <Link href="#specialties" className="text-white/70 hover:text-accent transition-colors">Áreas de Atuação</Link>
             <Link href="#testimonials" className="text-white/70 hover:text-accent transition-colors">Depoimentos</Link>
             <button className="text-left text-white/70 hover:text-accent transition-colors">Política de Privacidade</button>
           </div>
