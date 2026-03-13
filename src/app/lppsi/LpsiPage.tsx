@@ -912,7 +912,7 @@ function LpsiContact() {
                     <FormControl>
                       <Input
                         placeholder="Como deseja ser chamado?"
-                        className="rounded-xl border-slate-200 focus:border-[#2D5B7C] focus:ring-[#2D5B7C]/20"
+                        className="rounded-xl border-slate-200 bg-white text-slate-900 dark:bg-white dark:text-slate-900 placeholder:text-slate-400 focus:border-[#2D5B7C] focus:ring-[#2D5B7C]/20"
                         {...field}
                       />
                     </FormControl>
@@ -933,7 +933,7 @@ function LpsiContact() {
                         <Input
                           type="tel"
                           placeholder="(11) 99999-9999"
-                          className="rounded-xl border-slate-200 focus:border-[#2D5B7C] focus:ring-[#2D5B7C]/20"
+                          className="rounded-xl border-slate-200 bg-white text-slate-900 dark:bg-white dark:text-slate-900 placeholder:text-slate-400 focus:border-[#2D5B7C] focus:ring-[#2D5B7C]/20"
                           value={field.value}
                           onBlur={field.onBlur}
                           ref={field.ref}
@@ -956,7 +956,7 @@ function LpsiContact() {
                         <Input
                           type="email"
                           placeholder="exemplo@email.com"
-                          className="rounded-xl border-slate-200 focus:border-[#2D5B7C] focus:ring-[#2D5B7C]/20"
+                          className="rounded-xl border-slate-200 bg-white text-slate-900 dark:bg-white dark:text-slate-900 placeholder:text-slate-400 focus:border-[#2D5B7C] focus:ring-[#2D5B7C]/20"
                           {...field}
                         />
                       </FormControl>
@@ -977,7 +977,7 @@ function LpsiContact() {
                       <Textarea
                         rows={4}
                         placeholder="Conte-me brevemente como posso ajudar..."
-                        className="rounded-xl border-slate-200 focus:border-[#2D5B7C] focus:ring-[#2D5B7C]/20"
+                        className="rounded-xl border-slate-200 bg-white text-slate-900 dark:bg-white dark:text-slate-900 placeholder:text-slate-400 focus:border-[#2D5B7C] focus:ring-[#2D5B7C]/20"
                         {...field}
                       />
                     </FormControl>
