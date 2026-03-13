@@ -9,7 +9,6 @@ describe("submitContactForm", () => {
         email: "joao@exemplo.com",
         phone: "(11) 99999-8888",
         message: "Interesse em consulta",
-        consent: true,
     }
 
     beforeEach(() => {

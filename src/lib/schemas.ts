@@ -17,5 +17,4 @@ export const contactFormSchema = z.object({
       message: "Por favor, insira um número válido (ex: 11 99999-9999).",
     }),
   message: z.string().optional(),
-  consent: z.boolean().optional(),
 })

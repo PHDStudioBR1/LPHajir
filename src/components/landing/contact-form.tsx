@@ -18,7 +18,6 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
-import { Checkbox } from "@/components/ui/checkbox"
 import { useToast } from "@/hooks/use-toast"
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card"
 import { submitContactForm } from "@/lib/actions"
@@ -50,7 +49,6 @@ export default function ContactForm({ notificationEmail = DEFAULT_NOTIFICATION_E
       email: "",
       phone: "",
       message: "",
-      consent: false,
     },
   })
 
@@ -202,27 +200,6 @@ export default function ContactForm({ notificationEmail = DEFAULT_NOTIFICATION_E
                         />
                       </FormControl>
                       <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                <FormField
-                  control={form.control}
-                  name="consent"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                      <FormControl>
-                        <Checkbox
-                          checked={field.value}
-                          onCheckedChange={field.onChange}
-                        />
-                      </FormControl>
-                      <div className="space-y-1 leading-none">
-                        <FormLabel className="text-sm font-normal cursor-pointer">
-                          Autorizo o uso dos meus dados para retorno de contato.
-                        </FormLabel>
-                        <FormMessage />
-                      </div>
                     </FormItem>
                   )}
                 />

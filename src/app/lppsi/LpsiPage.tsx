@@ -42,7 +42,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Checkbox } from '@/components/ui/checkbox';
 import { useToast } from '@/hooks/use-toast';
 import { submitContactForm } from '@/lib/actions';
 import { contactFormSchema } from '@/lib/schemas';
@@ -777,7 +776,6 @@ function LpsiContact() {
       email: '',
       phone: '',
       message: '',
-      consent: false,
     },
   });
 
@@ -984,27 +982,6 @@ function LpsiContact() {
                       />
                     </FormControl>
                     <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="consent"
-                render={({ field }) => (
-                  <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                    <FormControl>
-                      <Checkbox
-                        checked={field.value}
-                        onCheckedChange={field.onChange}
-                        className="border-slate-300 data-[state=checked]:bg-[#2D5B7C] data-[state=checked]:border-[#2D5B7C]"
-                      />
-                    </FormControl>
-                    <div className="space-y-1 leading-none">
-                      <FormLabel className="text-sm font-normal text-slate-700 cursor-pointer">
-                        Autorizo o uso dos meus dados para retorno de contato.
-                      </FormLabel>
-                      <FormMessage />
-                    </div>
                   </FormItem>
                 )}
               />

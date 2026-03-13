@@ -4,7 +4,7 @@
 
 - Appointment Scheduling: Direct WhatsApp integration for instant consultation scheduling.
 - Carousel Testimonials: Smooth-transitioning carousel of real patient testimonials.
-- Contact Form: Form collects user's name, email and WhatsApp number with a mandatory consent checkbox for data usage.
+- Contact Form: Form collects user's name, email and WhatsApp number.
 - Specialty Highlights: Displays the mental health specializations of Dra. Hajir Abdalla, specifically in anxiety, depression and mood disorders.
 
 ## Style Guidelines:
