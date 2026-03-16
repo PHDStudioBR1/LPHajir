@@ -13,7 +13,7 @@ const WhatsAppIcon = ({ className }: { className?: string }) => (
 
 export default function Hero() {
   return (
-    <section id="home" className="w-full pt-20 bg-background relative overflow-hidden">
+    <section id="home" className="w-full pt-12 bg-background relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-primary/5 to-transparent pointer-events-none" />
       <div className="container mx-auto grid grid-cols-1 md:grid-cols-2 items-center gap-12 px-6 py-24 relative z-10">
         <div className="flex flex-col justify-center items-center md:items-start space-y-8 text-center md:text-left">
