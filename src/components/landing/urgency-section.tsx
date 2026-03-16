@@ -16,7 +16,7 @@ export default function UrgencySection() {
           </p>
           <Button
             asChild
-            className="bg-cta hover:bg-accent text-white font-bold text-xl px-12 py-8 h-auto rounded-full shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 mt-4"
+            className="bg-cta hover:bg-accent text-white font-bold text-lg px-8 py-6 h-auto rounded-full shadow-2xl transition-all duration-300 hover:scale-105 active:scale-95 mt-4 w-full max-w-xs mx-auto whitespace-normal text-center"
           >
             <a
               href={`https://wa.me/${WHATSAPP_NUMBER}`}

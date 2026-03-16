@@ -36,13 +36,13 @@ export default function Specialties() {
           <h2 className="text-3xl font-headline font-bold tracking-tight text-primary sm:text-4xl md:text-5xl">Áreas de Atuação</h2>
           <div className="w-20 h-1 bg-accent rounded-full mb-4" />
           <div className="max-w-[700px] text-muted-foreground text-lg md:text-xl space-y-4 text-left md:text-center">
-            <p>
+            <p className="font-semibold">
               Dormir exausto e acordar cansado. O peso no peito antes de começar o dia de trabalho. A mente que não desliga durante a noite e a sensação constante de que algo ruim vai acontecer. Se você está aqui, sabe exatamente como isso consome a sua energia vital.
             </p>
-            <p>
+            <p className="font-semibold">
               Ignorar esses sinais tem um custo alto. O estresse crônico acumulado evolui para o Burnout. A ansiedade não tratada afeta suas relações e paralisa suas decisões. A depressão rouba a vontade de fazer o que antes trazia prazer. Tentar resolver isso sozinho, ou com paliativos, apenas prolonga o sofrimento e agrava o quadro clínico.
             </p>
-            <p>
+            <p className="font-semibold">
               Você precisa de uma intervenção médica baseada em evidências. Meu papel como médica é mapear a raiz do seu sofrimento, oferecer um diagnóstico exato e estabelecer um protocolo de tratamento claro. Uma conversa estruturada, sigilosa e focada em devolver o controle da sua vida.
             </p>
           </div>

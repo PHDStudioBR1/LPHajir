@@ -57,7 +57,7 @@ export default function Hero() {
             </div>
             <Button
               asChild
-              className="group relative bg-green-600 hover:bg-green-500 text-white font-bold text-lg px-8 py-6 h-auto rounded-full shadow-xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] w-full md:w-auto inline-flex items-center justify-center gap-2 focus-visible:ring-4 focus-visible:ring-green-300 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              className="group relative bg-green-600 hover:bg-green-500 text-white font-bold text-lg px-8 py-6 h-auto rounded-full shadow-xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] w-full md:w-auto inline-flex items-center justify-center gap-2 whitespace-normal text-center focus-visible:ring-4 focus-visible:ring-green-300 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
             >
               <a
                 href={`https://wa.me/${WHATSAPP_NUMBER}`}
